@@ -3,9 +3,10 @@ interface Props {
   title: string;
   summary: string;
   href?: string;
+  imageSrc?: string;
 }
 
-const { title, summary, href } = Astro.props;
+const { title, summary, href, imageSrc } = Astro.props;
 const Tag = href ? "a" : "article";
 ---
 
@@ -14,6 +15,9 @@ const Tag = href ? "a" : "article";
   href={href}
 >
   <div class="project-card-top">
+    {imageSrc && (
+      <img class="project-card-image" src={imageSrc} alt={`${title} project screenshot`} />
+    )}
     <h2>{title}</h2>
     <p class="lead">{summary}</p>
   </div>

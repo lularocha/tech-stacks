@@ -10,7 +10,10 @@ const { currentSlug } = Astro.props;
 
 <header class="site-header">
   <nav class="site-nav" aria-label="Primary">
-    <a class="site-title" href="/">{siteTitle}</a>
+    <div class="site-brand">
+      <div class="site-kicker">sugiro.ai</div>
+      <a class="site-title" href="/">{siteTitle}</a>
+    </div>
     <div class="nav-links">
       <details class="menu">
         <summary class="menu-summary">
@@ -27,6 +30,9 @@ const { currentSlug } = Astro.props;
           aria-label="Close projects menu"
         ></button>
         <div class="menu-panel">
+          <a class:list={["menu-link", !currentSlug && "active"]} href="/">
+            Home
+          </a>
           {projects.map((project) => (
             <a
               class:list={[

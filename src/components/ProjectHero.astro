@@ -9,27 +9,45 @@ interface Props {
   lead: string;
   liveUrl?: string;
   stackRows: StackRow[];
+  imageSrc?: string;
 }
 
-const { title, lead, liveUrl, stackRows } = Astro.props;
+const {
+  title,
+  lead,
+  liveUrl,
+  stackRows,
+  imageSrc = "/placeholder-project.svg",
+} = Astro.props;
 ---
 
 <header class="hero">
   <div class="hero-card">
-    <div class="hero-inner">
-      <div>
+    <div class="hero-top">
+      <div class="hero-top-copy">
         <div class="hero-label">Tech Stack Review</div>
         <h1>{title}</h1>
         <p class="lead">{lead}</p>
         {liveUrl && (
           <p class="project-link">
-            Live site:
+            Live at:
             <a href={liveUrl} target="_blank" rel="noreferrer">
               {liveUrl}
             </a>
           </p>
         )}
       </div>
+      <div class="hero-image-wrap">
+        {liveUrl ? (
+          <a href={liveUrl} target="_blank" rel="noreferrer" aria-label={`Open ${title} live site`}>
+            <img class="hero-image" src={imageSrc} alt={`${title} project screenshot`} />
+          </a>
+        ) : (
+          <img class="hero-image" src={imageSrc} alt={`${title} project screenshot`} />
+        )}
+      </div>
+    </div>
+    <div class="hero-summary">
       <aside class="stack-box">
         <h2>At a glance</h2>
         <div class="stack-grid">
