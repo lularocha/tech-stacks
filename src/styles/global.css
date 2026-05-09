@@ -10,7 +10,7 @@
   --code-bg: #222222;
   --code-text: #f3efe9;
   --code-muted: #d4cdc4;
-  --radius: 1rem;
+  --radius: 0.5rem;
   --mono:
     ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas,
     Liberation Mono, monospace;
@@ -278,7 +278,7 @@ a {
   object-fit: cover;
   object-position: left top;
   display: block;
-  border-radius: 10px;
+  border-radius: var(--radius);
   background: #fff;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
@@ -288,7 +288,7 @@ a {
   align-items: center;
   gap: 10px;
   padding: 8px 12px;
-  border-radius: 999px;
+  border-radius: var(--radius);
   background: var(--accent-soft);
   color: var(--accent);
   font-size: 12px;
@@ -345,7 +345,7 @@ h1 {
 }
 
 .pill {
-  border-radius: 999px;
+  border-radius: var(--radius);
   padding: 10px 14px;
   background: rgba(255, 255, 255, 0.88);
   font-size: 0.95rem;
@@ -467,7 +467,7 @@ section {
   height: 34px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
+  border-radius: var(--radius);
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 800;
@@ -678,7 +678,7 @@ pre {
   min-height: 44px;
   width: fit-content;
   padding: 0 16px;
-  border-radius: 999px;
+  border-radius: var(--radius);
   background: var(--accent);
   color: #ffffff;
   font-weight: 600;
