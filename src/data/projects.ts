@@ -30,9 +30,9 @@ export const projects: ProjectEntry[] = [
     title: "Capital Gains Calculator",
     summary: {
       en:
-        "A lightweight browser-based calculator for simulating capital gains, IOF, and net profit on US stock buy/sell operations using PTAX exchange rates. It is built as a plain static web app with HTML, CSS, and vanilla JavaScript.",
+        "A lightweight browser-based calculator for simulating tax on capital gains, IOF, and net profit on US stock buy/sell operations using PTAX exchange rates. It is built as a plain static web app with HTML, CSS, and vanilla JavaScript.",
       pt:
-        "Uma calculadora leve baseada no navegador para simular ganho de capital, IOF e lucro líquido em operações de compra e venda de ações americanas usando cotações PTAX. Ela é construída como um app web estático com HTML, CSS e JavaScript puro.",
+        "Uma calculadora leve baseada no navegador para simular imposto sobre ganho de capital, IOF e lucro líquido em operações de compra e venda de ações americanas usando cotações PTAX. Ela é construída como um app web estático com HTML, CSS e JavaScript puro.",
     },
     liveUrl: "https://sugiro.io/stonks/",
     imageSrc: "/project-images/capital-gains-calculator.png",
