@@ -25,22 +25,6 @@ const copy = ui[locale];
       <a class="site-title" href={getHomePath(locale)}>{siteTitle}</a>
     </div>
     <div class="nav-links">
-      <div class="locale-switcher" aria-label="Language switcher">
-        <a
-          class:list={["locale-link", locale === "en" && "active"]}
-          href={getAlternatePath(locale, "en", currentSlug)}
-          data-lang-switch="en"
-        >
-          EN
-        </a>
-        <a
-          class:list={["locale-link", locale === "pt" && "active"]}
-          href={getAlternatePath(locale, "pt", currentSlug)}
-          data-lang-switch="pt"
-        >
-          PT
-        </a>
-      </div>
       <details class="menu">
         <summary class="menu-summary">
           <span class="sr-only">{copy.projectsMenuLabel}</span>
@@ -73,6 +57,22 @@ const copy = ui[locale];
               {project.title}
             </a>
           ))}
+          <div class="menu-locale-switcher" aria-label="Language switcher">
+            <a
+              class:list={["locale-link", locale === "en" && "active"]}
+              href={getAlternatePath(locale, "en", currentSlug)}
+              data-lang-switch="en"
+            >
+              EN
+            </a>
+            <a
+              class:list={["locale-link", locale === "pt" && "active"]}
+              href={getAlternatePath(locale, "pt", currentSlug)}
+              data-lang-switch="pt"
+            >
+              PT
+            </a>
+          </div>
         </div>
       </details>
     </div>
