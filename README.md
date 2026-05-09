@@ -129,5 +129,5 @@ The site is configured for static output in:
 
 ## Notes
 
-- There are legacy root-level HTML/CSS files from the earlier non-Astro version of the site. The Astro source of truth is the `src/` and `public/` folders.
+- The Astro source of truth lives in the `src/` and `public/` folders.
 - Always run `npm run build` before committing changes that affect routes, assets, or localized pages.
