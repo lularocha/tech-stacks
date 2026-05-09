@@ -3,7 +3,7 @@
   --panel: #ffffff;
   --panel-strong: #ffffff;
   --text: #1f1f1f;
-  --muted: #636363;
+  --muted: #777;
   --accent: #ff7700;
   --accent-soft: #ffe6cc;
   --accent-deep: #c95f00;
@@ -96,6 +96,7 @@ a {
 
 .locale-link.active {
   color: var(--text);
+  font-weight: 600;
 }
 
 .locale-link:hover {
@@ -254,6 +255,11 @@ a {
   color: var(--text);
 }
 
+.menu-link.active,
+.nav-link.active {
+  font-weight: 600;
+}
+
 .hero {
   padding: 30px 0;
   background: #ffffff;
@@ -293,15 +299,37 @@ a {
   flex: 0 0 auto;
 }
 
+.hero-image-wrap a {
+  display: block;
+  border-radius: var(--radius);
+  outline: none;
+}
+
+.hero-image-wrap a:focus {
+  outline: none;
+}
+
+.hero-image-wrap a:focus-visible {
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 3px rgba(255, 119, 0, 0.22);
+}
+
 .hero-image {
   width: 260px;
   height: 260px;
   object-fit: cover;
   object-position: left top;
   display: block;
+  border: 0;
   border-radius: var(--radius);
   background: #fff;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  outline: none;
+}
+
+.hero-image:focus,
+.hero-image:focus-visible {
+  outline: none;
 }
 
 .eyebrow {
@@ -626,7 +654,7 @@ pre {
 }
 
 .stack-row strong {
-  color: #999;
+  color: var(--muted);
   font-size: 1.05rem;
   font-weight: 400;
   font-family: var(--sans);
@@ -712,7 +740,7 @@ pre {
 .project-card-link-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-  background-color: #fe0;
+  background-color: #fffef2;
   color: #000;
 }
 
