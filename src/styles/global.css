@@ -646,7 +646,7 @@ pre {
 
 .stack-row {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 145px 1fr;
   gap: 12px;
   align-items: center;
   border-top: 1px solid #f0f0f0;
