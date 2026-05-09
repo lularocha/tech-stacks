@@ -1,0 +1,45 @@
+---
+import { projects, siteTitle } from "../data/projects";
+
+interface Props {
+  currentSlug?: string;
+}
+
+const { currentSlug } = Astro.props;
+---
+
+<header class="site-header">
+  <nav class="site-nav" aria-label="Primary">
+    <a class="site-title" href="/">{siteTitle}</a>
+    <div class="nav-links">
+      <details class="menu">
+        <summary class="menu-summary">
+          <span class="sr-only">Projects</span>
+          <span class="menu-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </summary>
+        <button
+          class="menu-overlay"
+          type="button"
+          aria-label="Close projects menu"
+        ></button>
+        <div class="menu-panel">
+          {projects.map((project) => (
+            <a
+              class:list={[
+                "menu-link",
+                currentSlug === project.slug && "active",
+              ]}
+              href={`/${project.slug}.html`}
+            >
+              {project.title}
+            </a>
+          ))}
+        </div>
+      </details>
+    </div>
+  </nav>
+</header>

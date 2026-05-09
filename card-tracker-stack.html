@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Tracker Tech Stack</title>
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script src="scripts/menu.js" defer></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Primary">
+          <a class="site-title" href="index.html">AI Projects / Tech Stacks</a>
+          <div class="nav-links">
+            <details class="menu">
+              <summary class="menu-summary">
+                <span class="sr-only">Projects</span>
+                <span class="menu-icon" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </summary>
+              <button
+                class="menu-overlay"
+                type="button"
+                aria-label="Close projects menu"
+              ></button>
+              <div class="menu-panel">
+                <a class="menu-link active" href="card-tracker-stack.html">
+                  Card Tracker
+                </a>
+                <a class="menu-link" href="glossary-builder-stack.html">
+                  Glossary Builder
+                </a>
+              </div>
+            </details>
+          </div>
+        </nav>
+      </header>
+      <header class="hero">
+        <div class="hero-card">
+          <div class="hero-inner">
+            <div>
+              <div class="hero-label">Tech Stack Review</div>
+              <h1>Card Tracker</h1>
+              <p class="lead">
+                A small full-stack finance dashboard built with Next.js. It reads
+                credit card statements from CSV files, classifies merchants into
+                categories, exposes server-side API routes, and renders charts and
+                tables in a React client.
+              </p>
+              <p class="project-link">
+                Live site:
+                <a
+                  href="https://mycctracker.vercel.app/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  https://mycctracker.vercel.app/
+                </a>
+              </p>
+            </div>
+            <aside class="stack-box">
+              <h2>At a glance</h2>
+              <div class="stack-grid">
+                <div class="stack-row">
+                  <strong>Framework</strong>
+                  <span>Next.js 15</span>
+                </div>
+                <div class="stack-row">
+                  <strong>UI</strong>
+                  <span>React 19</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Language</strong>
+                  <span>JavaScript</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Charts</strong>
+                  <span>Recharts</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Routing</strong>
+                  <span>Next.js App Router</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Server data</strong>
+                  <span>Route handlers in <code>/app/api</code></span>
+                </div>
+                <div class="stack-row">
+                  <strong>Storage</strong>
+                  <span>CSV, JSON, optional Upstash Redis</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Auth</strong>
+                  <span>Password + HTTP-only cookies</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Main Stack</h2>
+              <p>What is used in this project and what each piece is doing.</p>
+            </div>
+          </div>
+          <div class="grid cols-3">
+            <article class="card">
+              <div class="accent blue">Framework</div>
+              <h3>Next.js 15 with App Router</h3>
+              <p>
+                Next.js is the main framework. It handles page routing, server
+                rendering, API endpoints, and the build process. The project uses
+                the <span class="path">app/</span> directory, which means it is using
+                the newer App Router model instead of the older
+                <span class="path">pages/</span> router.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent teal">UI Layer</div>
+              <h3>React 19</h3>
+              <p>
+                React powers the interactive dashboard. The main dashboard is a
+                client component, so charts, filters, category assignment, local
+                state, and fetch calls all run in the browser after the app loads.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent violet">Language</div>
+              <h3>Plain JavaScript</h3>
+              <p>
+                The codebase is written in JavaScript, not TypeScript. There are
+                no type definition files or a TypeScript config, so the project
+                stays lightweight but does not get static type checking.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent amber">Charts</div>
+              <h3>Recharts</h3>
+              <p>
+                Recharts is used for the visual reporting layer. It drives the pie
+                charts and line charts in the dashboard and fits naturally into the
+                React component tree.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent blue">Persistence</div>
+              <h3>CSV, JSON, and optional Upstash Redis</h3>
+              <p>
+                Transaction data comes from monthly CSV files. Category rules are
+                seeded from JSON files. In local development the app can persist
+                rule changes back to JSON. In deployed environments it can use
+                Upstash Redis for rule persistence.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent teal">Runtime</div>
+              <h3>Node.js server runtime</h3>
+              <p>
+                The server-side code uses Node APIs such as
+                <span class="path">node:fs</span>, <span class="path">node:path</span>,
+                and <span class="path">node:crypto</span>. That means this is not just
+                a static site. It needs a Node runtime to read files, process data,
+                and handle authenticated API requests.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>How It Runs</h2>
+              <p>The simple runtime story from browser request to rendered dashboard.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">
+              <div class="num">1</div>
+              <div>
+                <h3>Next.js starts the app</h3>
+                <p>
+                  The project runs with <code>next dev</code> locally and
+                  <code>next build</code> plus <code>next start</code> for a production
+                  build. The main route lives in
+                  <span class="path">app/page.js</span>.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">2</div>
+              <div>
+                <h3>Server checks authentication</h3>
+                <p>
+                  Before showing the dashboard, the server checks cookies and
+                  environment-based passwords in <span class="path">lib/auth.js</span>.
+                  If the user is not authenticated, the app renders a password
+                  screen instead of the dashboard.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">3</div>
+              <div>
+                <h3>Client dashboard fetches data from API routes</h3>
+                <p>
+                  Once logged in, the browser-side dashboard component calls
+                  <code>/api/months</code>, <code>/api/data/[month]</code>, and
+                  <code>/api/categories</code>. These route handlers run on the server
+                  and return JSON.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">4</div>
+              <div>
+                <h3>Server reads CSV and category rules</h3>
+                <p>
+                  The server loads statement files from the selected profile's
+                  directory, parses the CSV rows, normalizes merchant names, applies
+                  categorization rules, and returns shaped transaction data to the
+                  client.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">5</div>
+              <div>
+                <h3>React renders charts and transaction views</h3>
+                <p>
+                  The client component holds the loaded months in local state,
+                  computes totals, filters categories, sorts transactions, and feeds
+                  the final data into Recharts visualizations and table-like views.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Architecture Map</h2>
+              <p>The project is compact, but it still has a clear split by responsibility.</p>
+            </div>
+          </div>
+          <div class="two-col">
+            <div class="card callout">
+              <div class="accent blue">Key folders</div>
+              <div class="tableish">
+                <div class="row">
+                  <strong>app/</strong>
+                  <span>Route entry points, layout, global CSS, and API route handlers.</span>
+                </div>
+                <div class="row">
+                  <strong>components/</strong>
+                  <span>React UI components, including the interactive dashboard and password screen.</span>
+                </div>
+                <div class="row">
+                  <strong>lib/</strong>
+                  <span>Core business logic for auth, profiles, CSV parsing, normalization, and rule storage.</span>
+                </div>
+                <div class="row">
+                  <strong>statements/</strong>
+                  <span>Main profile monthly statement CSV files.</span>
+                </div>
+                <div class="row">
+                  <strong>statements-ana/</strong>
+                  <span>Separate statement dataset for another profile.</span>
+                </div>
+                <div class="row">
+                  <strong>statements-demo/</strong>
+                  <span>Demo dataset used to showcase the app without exposing real data.</span>
+                </div>
+              </div>
+            </div>
+            <div class="code-card">
+              <h3>Important files</h3>
+              <pre>package.json
+next.config.mjs
+
+app/page.js
+app/api/months/route.js
+app/api/data/[month]/route.js
+app/api/categories/route.js
+
+components/dashboard-client.js
+
+lib/auth.js
+lib/profiles.js
+lib/statements.js
+lib/rules-store.js
+lib/normalize.js</pre>
+              <p>
+                This is a very typical small full-stack Next.js shape: routing in
+                <code>app/</code>, UI in <code>components/</code>, and reusable server
+                logic in <code>lib/</code>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Data and Storage</h2>
+              <p>This app is file-driven first, with Redis as an optional deployment helper.</p>
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <article class="card mini-list">
+              <div class="accent teal">Primary model</div>
+              <h3>Local files are the main source of truth</h3>
+              <ul>
+                <li>Transactions live in monthly CSV files such as <code>2026-04.csv</code>.</li>
+                <li>Category rules are stored in JSON files like <code>categories.json</code>.</li>
+                <li>The server reads these files directly using Node's filesystem APIs.</li>
+                <li>This makes the project simple to understand and easy to run locally.</li>
+              </ul>
+            </article>
+            <article class="card mini-list">
+              <div class="accent amber">Optional cloud layer</div>
+              <h3>Upstash Redis is used only for persisted rules</h3>
+              <ul>
+                <li>The project includes <code>@upstash/redis</code> as a dependency.</li>
+                <li>If Redis credentials exist, saved categorization rules are written to a Redis hash.</li>
+                <li>If Redis is missing, local development falls back to JSON files.</li>
+                <li>The statements themselves are still file-based rather than stored in a database.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Auth and Profiles</h2>
+              <p>A lightweight custom authentication system instead of a third-party auth provider.</p>
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <article class="card">
+              <div class="accent violet">Authentication</div>
+              <h3>Password gate with cookies</h3>
+              <p>
+                The app hashes a profile-specific password into an HTTP-only cookie.
+                On each request, the server checks whether that cookie matches the
+                configured password stored in environment variables. This is much
+                simpler than OAuth or a full user database and fits a personal tool.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent blue">Profiles</div>
+              <h3>Multiple data profiles are built in</h3>
+              <p>
+                <span class="path">lib/profiles.js</span> defines separate profiles for
+                the main account, another account, and a demo mode. Each profile has
+                its own statements directory, categories file, Redis key, and
+                password environment variable.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Run Commands</h2>
+              <p>The practical commands that make the project work.</p>
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <article class="code-card">
+              <h3>Scripts from package.json</h3>
+              <pre>npm install
+npm run dev
+
+npm run build
+npm start</pre>
+              <p>
+                The <code>dev</code> script clears the <code>.next</code> directory and
+                starts the local development server. Build and start are the normal
+                production commands for a Next.js app.
+              </p>
+            </article>
+            <article class="card mini-list">
+              <div class="accent teal">Environment setup</div>
+              <h3>What the app expects</h3>
+              <ul>
+                <li><code>DASHBOARD_PASSWORD</code> for the main protected profile.</li>
+                <li><code>DASHBOARD_PASSWORD_ANA</code> if the second protected profile is used.</li>
+                <li><code>UPSTASH_REDIS_REST_URL</code> and <code>UPSTASH_REDIS_REST_TOKEN</code> only if Redis-backed persistence is wanted.</li>
+                <li>Statement CSVs placed in the expected profile directories.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Bottom Line</h2>
+              <p>The shortest honest summary of the stack.</p>
+            </div>
+          </div>
+          <div class="card callout">
+            <p>
+              Card Tracker is a <strong>small full-stack Next.js application</strong>,
+              not just a frontend website. It uses <strong>React for the UI</strong>,
+              <strong>Node.js on the server</strong>, <strong>JavaScript instead of TypeScript</strong>,
+              <strong>CSV and JSON files as its primary data layer</strong>, and
+              <strong>Upstash Redis only as an optional persistence layer for rules</strong>.
+              The architecture is simple and practical: file-based data, custom auth,
+              API routes, and a client dashboard with charts.
+            </p>
+          </div>
+          <p class="footer-note">
+            Source basis for this page: the actual files in
+            <span class="path">/Users/rocha/Documents/AI-Projects/card-tracker</span>,
+            including <span class="path">package.json</span>,
+            <span class="path">app/page.js</span>,
+            <span class="path">components/dashboard-client.js</span>,
+            <span class="path">lib/statements.js</span>,
+            <span class="path">lib/rules-store.js</span>,
+            <span class="path">lib/auth.js</span>, and related route handlers.
+          </p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>
+          Developed by Lula Rocha
+          <a href="https://sugiro.ai" target="_blank" rel="noreferrer">
+            sugiro.ai
+          </a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

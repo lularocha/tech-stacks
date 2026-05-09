@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+  href?: string;
+}
+
+const { title, summary, href } = Astro.props;
+const Tag = href ? "a" : "article";
+---
+
+<Tag
+  class:list={["project-card", href && "project-card-link-card"]}
+  href={href}
+>
+  <div class="project-card-top">
+    <h2>{title}</h2>
+    <p class="lead">{summary}</p>
+  </div>
+</Tag>

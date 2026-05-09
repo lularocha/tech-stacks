@@ -1,0 +1,96 @@
+---
+import ProjectHero from "../components/ProjectHero.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+
+const project = projects.find((entry) => entry.slug === "capital-gains-calculator-stack")!;
+const stackRows = [
+  { label: "Type", value: "Static single-page calculator" },
+  { label: "Language", value: "HTML + CSS + JavaScript" },
+  { label: "Styling", value: "Custom CSS" },
+  { label: "Logic", value: "Inline browser-side JavaScript" },
+  { label: "Domain", value: "Capital gains + PTAX conversion" },
+  { label: "Data source", value: "User input + BCB PTAX reference" },
+  { label: "Build step", value: "None" },
+  { label: "Runtime", value: "Browser only" },
+];
+---
+
+<BaseLayout title="Capital Gains Calculator Tech Stack" currentSlug={project.slug}>
+  <ProjectHero
+    title={project.title}
+    lead={project.summary}
+    stackRows={stackRows}
+  />
+
+  <main>
+    <section>
+      <div class="section-head"><div><h2>Main Stack</h2><p>What powers this calculator and how lightweight the implementation is.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Markup</div><h3>Plain HTML</h3><p>The app is a single HTML document that defines the entire interface, including the form, results panels, help button, and modal content. There is no framework or component system involved.</p></article>
+        <article class="card"><div class="accent teal">Styling</div><h3>Custom CSS</h3><p>The visual design is handled by one standalone stylesheet. The project uses a strong custom look, responsive rules, and imported typography without relying on Tailwind, Bootstrap, or a build pipeline.</p></article>
+        <article class="card"><div class="accent violet">Logic</div><h3>Vanilla JavaScript</h3><p>The calculator logic runs directly in the browser through plain JavaScript functions. Input validation, calculation, DOM updates, and modal behavior are all implemented without external libraries.</p></article>
+        <article class="card"><div class="accent amber">Domain logic</div><h3>Tax and FX calculation</h3><p>The app focuses on converting buy and sell values with PTAX exchange rates, estimating gross profit, tax, IOF, and net values for US stock transactions from a Brazilian tax perspective.</p></article>
+        <article class="card"><div class="accent blue">External reference</div><h3>BCB PTAX context</h3><p>The calculator links users to the Central Bank of Brazil PTAX history page and explains which PTAX direction is relevant for buy and sell operations. It does not automate that lookup itself.</p></article>
+        <article class="card"><div class="accent teal">Runtime model</div><h3>No build step</h3><p>This project is fully static. It can be opened directly in a browser or served from any simple static server, which makes it very easy to run and deploy.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>How It Runs</h2><p>The whole app executes client-side inside one browser page.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>The browser loads one HTML page</h3><p>The interface, labels, input fields, result areas, and modal markup are all embedded directly in <span class="path">index.html</span>.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>The stylesheet defines the UI</h3><p><span class="path">styles.css</span> provides the entire visual layer, including layout, typography, button styling, modal appearance, and mobile adjustments.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>User input drives the calculation</h3><p>When the user enters PTAX and transaction values and clicks the calculate button, inline JavaScript validates the inputs and computes the currency-converted totals.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>The page updates result fields</h3><p>The app writes the computed values directly into DOM nodes for acquisition value, sale value, gross profit, taxes, net profit, and percentage analysis.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>Modal content stays in-page</h3><p>The explanatory help modal is implemented in the same document and toggled with simple DOM class and display changes rather than a framework component system.</p></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Architecture Map</h2><p>This project is structurally simple: one page, one stylesheet, one inline logic layer.</p></div></div>
+      <div class="two-col">
+        <div class="card callout">
+          <div class="accent blue">Key files</div>
+          <div class="tableish">
+            <div class="row"><strong>index.html</strong><span>Main interface markup, modal markup, and inline calculation logic.</span></div>
+            <div class="row"><strong>styles.css</strong><span>Full visual design, layout rules, typography, and responsiveness.</span></div>
+            <div class="row"><strong>tax.ico</strong><span>Project favicon asset.</span></div>
+          </div>
+        </div>
+        <div class="code-card">
+          <h3>Important files</h3>
+          <pre>index.html
+styles.css
+tax.ico</pre>
+          <p>The whole project is essentially a self-contained browser application. That makes it low-maintenance, but also means structure and scalability are limited compared with component-based apps.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Data and Logic</h2><p>The calculator is input-driven and does not rely on persisted storage or backend services.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Computation</div><h3>All results are derived in the browser</h3><ul><li>The user supplies exchange rates and transaction values manually.</li><li>The JavaScript logic validates the fields before any results are shown.</li><li>Profit, IOF, and tax calculations are computed immediately in-page.</li><li>No data is sent to a backend or saved to a database.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Reference model</div><h3>Educational and simulation-oriented</h3><ul><li>The interface links out to BCB PTAX historical data.</li><li>The modal explains why different PTAX sides matter for buy and sell operations.</li><li>The calculator is framed as a simulation aid rather than an authoritative tax engine.</li><li>The page explicitly advises consulting a specialized accountant.</li></ul></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Run Commands</h2><p>No framework dev server is required unless you want one.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Local usage</h3><pre>open index.html
+
+# or
+python -m http.server</pre><p>You can open the file directly in a browser or serve it with any very small static server if you prefer a local URL-based workflow.</p></article>
+        <article class="card mini-list"><div class="accent teal">Environment setup</div><h3>What the project expects</h3><ul><li>No package manager or dependency installation step.</li><li>No environment variables.</li><li>No API keys.</li><li>No backend runtime.</li></ul></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Bottom Line</h2><p>The shortest honest summary of the stack.</p></div></div>
+      <div class="card callout"><p>Capital Gains Calculator is a <strong>plain static web app</strong> built with <strong>HTML, CSS, and vanilla JavaScript</strong>. Its strength is simplicity: everything runs in the browser, there is no build step, and the domain logic is focused tightly on one financial/tax calculation workflow.</p></div>
+      <p class="footer-note">Source basis for this page: the actual files in <span class="path">/Users/rocha/Documents/AI-Projects/capital-gains-calculator</span>, including <span class="path">index.html</span> and <span class="path">styles.css</span>.</p>
+    </section>
+  </main>
+</BaseLayout>

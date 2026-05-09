@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glossary Builder Tech Stack</title>
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script src="scripts/menu.js" defer></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <nav class="site-nav" aria-label="Primary">
+          <a class="site-title" href="index.html">AI Projects / Tech Stacks</a>
+          <div class="nav-links">
+            <details class="menu">
+              <summary class="menu-summary">
+                <span class="sr-only">Projects</span>
+                <span class="menu-icon" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </summary>
+              <button
+                class="menu-overlay"
+                type="button"
+                aria-label="Close projects menu"
+              ></button>
+              <div class="menu-panel">
+                <a class="menu-link" href="card-tracker-stack.html">
+                  Card Tracker
+                </a>
+                <a class="menu-link active" href="glossary-builder-stack.html">
+                  Glossary Builder
+                </a>
+              </div>
+            </details>
+          </div>
+        </nav>
+      </header>
+
+      <header class="hero">
+        <div class="hero-card">
+          <div class="hero-inner">
+            <div>
+              <div class="hero-label">Tech Stack Review</div>
+              <h1>Glossary Builder</h1>
+              <p class="lead">
+                An AI-powered glossary generator built as a React single-page app.
+                It takes a seed word, calls Claude through serverless API endpoints,
+                generates a 12-term glossary, lets users expand individual terms,
+                auto-saves work in the browser, and exports the result as markdown
+                or a Word document.
+              </p>
+              <p class="project-link">
+                Live site:
+                <a
+                  href="https://glossary-builder.vercel.app/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  https://glossary-builder.vercel.app/
+                </a>
+              </p>
+            </div>
+            <aside class="stack-box">
+              <h2>At a glance</h2>
+              <div class="stack-grid">
+                <div class="stack-row">
+                  <strong>Framework</strong>
+                  <span>React 19 + Vite</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Language</strong>
+                  <span>TypeScript</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Styling</strong>
+                  <span>Tailwind CSS v4</span>
+                </div>
+                <div class="stack-row">
+                  <strong>AI</strong>
+                  <span>Anthropic SDK + Claude Sonnet 4</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Backend</strong>
+                  <span>Vercel serverless functions</span>
+                </div>
+                <div class="stack-row">
+                  <strong>API routes</strong>
+                  <span><code>/api/generate</code> + <code>/api/expand</code></span>
+                </div>
+                <div class="stack-row">
+                  <strong>Storage</strong>
+                  <span>localStorage</span>
+                </div>
+                <div class="stack-row">
+                  <strong>Exports</strong>
+                  <span>Markdown + DOCX</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Main Stack</h2>
+              <p>What is used in this project and what each layer is responsible for.</p>
+            </div>
+          </div>
+          <div class="grid cols-3">
+            <article class="card">
+              <div class="accent blue">Frontend</div>
+              <h3>React 19</h3>
+              <p>
+                The user interface is a React single-page application. The main app
+                coordinates glossary generation, export actions, menu state,
+                reminders, and per-term expansion flows inside one client-side app.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent teal">Language</div>
+              <h3>TypeScript</h3>
+              <p>
+                The runtime code is written in TypeScript, including the frontend
+                app and the serverless API handlers. Types are used for glossary
+                objects, term payloads, translations, and API responses.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent violet">Build Tool</div>
+              <h3>Vite 7</h3>
+              <p>
+                Vite powers the frontend development server and production build.
+                The project also uses the Vite React plugin, which makes this a
+                modern React app rather than a Next.js or Astro site.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent amber">Styling</div>
+              <h3>Tailwind CSS v4</h3>
+              <p>
+                Tailwind drives the styling layer. The app imports Tailwind through
+                <span class="path">src/index.css</span>, uses PostCSS for processing,
+                and keeps the visual system mostly utility-class based.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent blue">AI Integration</div>
+              <h3>Anthropic SDK + Claude</h3>
+              <p>
+                Glossary generation and term expansion both run through the official
+                Anthropic SDK. The serverless functions call Claude Sonnet 4 and
+                shape the returned content into validated JSON.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent teal">Backend Pattern</div>
+              <h3>Vercel serverless functions</h3>
+              <p>
+                The backend lives in <span class="path">api/</span> as TypeScript
+                functions. These endpoints handle prompt construction, model calls,
+                JSON cleanup, validation, and error responses for the browser app.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>How It Runs</h2>
+              <p>The main runtime flow from seed word input to generated glossary output.</p>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step">
+              <div class="num">1</div>
+              <div>
+                <h3>React boots inside Vite</h3>
+                <p>
+                  <span class="path">src/main.tsx</span> mounts the React app and wraps
+                  it in a language provider. Vite serves the frontend during
+                  development and builds the static app bundle for production.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">2</div>
+              <div>
+                <h3>The app loads saved browser data</h3>
+                <p>
+                  On startup, the app reads any saved glossary from localStorage and
+                  restores the last session. The UI language is also persisted and
+                  rehydrated from browser storage.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">3</div>
+              <div>
+                <h3>The client calls serverless endpoints</h3>
+                <p>
+                  When a user generates a glossary or expands a term, the frontend
+                  posts JSON to <code>/api/generate</code> or
+                  <code>/api/expand</code> through utility wrappers in
+                  <span class="path">src/utils/claudeApi.ts</span>.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">4</div>
+              <div>
+                <h3>The backend calls Claude and validates the response</h3>
+                <p>
+                  Each API function builds a structured prompt, sends it to Claude
+                  Sonnet 4, strips markdown wrappers from the response if needed,
+                  parses the JSON, validates the expected structure, and returns a
+                  clean payload to the browser.
+                </p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">5</div>
+              <div>
+                <h3>The browser renders, saves, and exports the glossary</h3>
+                <p>
+                  The generated glossary stays in React state, auto-saves to
+                  localStorage, and can be copied as markdown or exported as a DOCX
+                  file using browser-side file generation tools.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Architecture Map</h2>
+              <p>The project is organized as a frontend app with a small AI-focused backend.</p>
+            </div>
+          </div>
+          <div class="two-col">
+            <div class="card callout">
+              <div class="accent blue">Key folders</div>
+              <div class="tableish">
+                <div class="row">
+                  <strong>src/</strong>
+                  <span>Main React application code, styling imports, utilities, i18n, and type definitions.</span>
+                </div>
+                <div class="row">
+                  <strong>api/</strong>
+                  <span>Serverless functions for glossary generation and term expansion.</span>
+                </div>
+                <div class="row">
+                  <strong>public/</strong>
+                  <span>Static assets like the project favicon.</span>
+                </div>
+                <div class="row">
+                  <strong>dist/</strong>
+                  <span>Built frontend output after the production build step.</span>
+                </div>
+                <div class="row">
+                  <strong>backlog/</strong>
+                  <span>Project notes and planning documents for future features.</span>
+                </div>
+                <div class="row">
+                  <strong>.vercel/</strong>
+                  <span>Local Vercel project metadata for deployment and local development tooling.</span>
+                </div>
+              </div>
+            </div>
+            <div class="code-card">
+              <h3>Important files</h3>
+              <pre>package.json
+vite.config.ts
+tsconfig.json
+
+src/main.tsx
+src/App.tsx
+src/index.css
+src/utils/claudeApi.ts
+src/utils/storage.ts
+src/i18n/LanguageContext.tsx
+
+api/generate.ts
+api/expand.ts
+api/GLOSSARY_RULES.md</pre>
+              <p>
+                The shape here is different from Card Tracker: this is not a
+                file-driven Node app with route handlers inside a framework. It is
+                a Vite frontend plus a separate <code>api/</code> folder for
+                serverless backend logic.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Data and Storage</h2>
+              <p>The persistence story is browser-first rather than database-first.</p>
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <article class="card mini-list">
+              <div class="accent teal">Browser storage</div>
+              <h3>localStorage is the persistence layer</h3>
+              <ul>
+                <li>The app saves the generated glossary into localStorage automatically.</li>
+                <li>Expanded term details are also cached in localStorage for quick reopening.</li>
+                <li>Language preference is persisted in browser storage too.</li>
+                <li>This project does not depend on a database for normal use.</li>
+              </ul>
+            </article>
+            <article class="card mini-list">
+              <div class="accent amber">Generated outputs</div>
+              <h3>Exports happen in the browser</h3>
+              <ul>
+                <li>Markdown export is created client-side as a downloadable blob.</li>
+                <li>Word export is assembled in the browser using the <code>docx</code> package.</li>
+                <li><code>file-saver</code> is used to download the generated DOCX file.</li>
+                <li>The app is designed around temporary working state plus exportable files.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>AI and API Layer</h2>
+              <p>The main complexity of this project is in prompt design and response shaping.</p>
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <article class="card">
+              <div class="accent violet">Generate endpoint</div>
+              <h3><code>/api/generate</code></h3>
+              <p>
+                This endpoint asks Claude to detect the seed word language, return
+                translated UI labels when needed, create a glossary description, and
+                generate exactly 12 structured terms with definitions and related
+                terms in JSON form.
+              </p>
+            </article>
+            <article class="card">
+              <div class="accent blue">Expand endpoint</div>
+              <h3><code>/api/expand</code></h3>
+              <p>
+                This endpoint asks Claude for deeper explanation paragraphs and
+                official documentation sources for a single glossary term. It keeps
+                the response scoped, structured, and source-oriented for the Learn
+                More feature.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Run Commands</h2>
+              <p>The practical commands and environment expectations for working on it.</p>
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <article class="code-card">
+              <h3>Scripts and local run modes</h3>
+              <pre>npm install
+
+vercel dev
+
+npm run dev
+npm run build
+npm run preview
+npm run lint</pre>
+              <p>
+                The key nuance is that <code>vercel dev</code> is the real full-stack
+                local mode because it runs both the Vite frontend and the serverless
+                API functions together. <code>npm run dev</code> is useful for
+                frontend-only Vite work.
+              </p>
+            </article>
+            <article class="card mini-list">
+              <div class="accent teal">Environment setup</div>
+              <h3>What the app expects</h3>
+              <ul>
+                <li><code>ANTHROPIC_API_KEY</code> must be configured for the API functions.</li>
+                <li>Node.js 18 or newer is expected by the project documentation.</li>
+                <li>Vercel CLI is part of the recommended local workflow.</li>
+                <li>There is no separate database or auth provider to configure.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Bottom Line</h2>
+              <p>The shortest honest summary of the stack.</p>
+            </div>
+          </div>
+          <div class="card callout">
+            <p>
+              Glossary Builder is a <strong>Vite + React + TypeScript</strong>
+              application with a small <strong>Vercel serverless backend</strong>.
+              Its core value comes from <strong>Claude-powered content generation</strong>,
+              while the browser handles <strong>state, local persistence, and export</strong>.
+              Compared with Card Tracker, it is more of an AI-assisted frontend app
+              than a file-driven Node application.
+            </p>
+          </div>
+          <p class="footer-note">
+            Source basis for this page: the actual files in
+            <span class="path">/Users/rocha/Documents/AI-Projects/glossary-builder</span>,
+            including <span class="path">package.json</span>,
+            <span class="path">vite.config.ts</span>,
+            <span class="path">src/App.tsx</span>,
+            <span class="path">src/main.tsx</span>,
+            <span class="path">src/utils/storage.ts</span>,
+            <span class="path">src/utils/claudeApi.ts</span>,
+            <span class="path">api/generate.ts</span>, and
+            <span class="path">api/expand.ts</span>.
+          </p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>
+          Developed by Lula Rocha
+          <a href="https://sugiro.ai" target="_blank" rel="noreferrer">
+            sugiro.ai
+          </a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

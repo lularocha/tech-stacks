@@ -1,0 +1,85 @@
+---
+import ProjectHero from "../components/ProjectHero.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+
+const project = projects.find((entry) => entry.slug === "mybtc-calculator-stack")!;
+const stackRows = [
+  { label: "Type", value: "Static calculator app" },
+  { label: "Language", value: "HTML + CSS + JavaScript" },
+  { label: "Architecture", value: "Modular vanilla JS" },
+  { label: "Data", value: "Live Bitcoin price API" },
+  { label: "Currencies", value: "BTC, SATS, USD, BRL, EUR, GBP" },
+  { label: "i18n", value: "English + Portuguese" },
+  { label: "Build step", value: "None" },
+  { label: "Runtime", value: "Browser + external API" },
+];
+---
+
+<BaseLayout title="BTC Calculator Tech Stack" currentSlug={project.slug}>
+  <ProjectHero title={project.title} lead={project.summary} stackRows={stackRows} />
+
+  <main>
+    <section><div class="section-head"><div><h2>Main Stack</h2><p>What powers this Bitcoin conversion tool and what makes it more feature-rich than a basic static page.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Markup</div><h3>Plain HTML interface</h3><p>The UI is defined in one HTML page, including the currency toggles, keypad modal, info panel, help modal, and dynamic display areas for BTC, SATS, and fiat conversions.</p></article>
+        <article class="card"><div class="accent teal">Styling</div><h3>Custom CSS</h3><p>The visual system is custom-built and includes branded styling, responsive behavior, mobile-first keypad support, icon assets, and dark mode support.</p></article>
+        <article class="card"><div class="accent violet">JavaScript structure</div><h3>Core + app split</h3><p>The project separates lower-level conversion logic from UI orchestration. That keeps pricing, formatting, translation, interaction, and display logic more maintainable than a one-file script.</p></article>
+        <article class="card"><div class="accent amber">Live data</div><h3>External Bitcoin price API</h3><p>The app uses live price data for conversions and price-change tracking, so it is still static in structure but depends on an external market data source for full functionality.</p></article>
+        <article class="card"><div class="accent blue">User experience</div><h3>Multi-language and mobile features</h3><p>The calculator supports English and Portuguese, includes Android-specific handling, a custom keypad flow, dark mode logic, and richer modal/help interactions than a minimal utility page.</p></article>
+        <article class="card"><div class="accent teal">Runtime model</div><h3>No bundler or framework</h3><p>The project has no package manifest or frontend framework. It stays dependency-light by relying on browser JavaScript, local assets, and a small set of manually organized script files.</p></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>How It Runs</h2><p>The calculator combines static assets with runtime market data inside the browser.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>The browser loads the static app shell</h3><p><span class="path">index.html</span> loads the core interface, icon assets, modal structures, and the JavaScript entry files.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>Core logic initializes conversion behavior</h3><p><span class="path">js/core.js</span> handles currency logic, display formatting, translation data, and calculator behavior shared across the app.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>App logic wires the UI</h3><p><span class="path">js/app.js</span> coordinates animations, info panels, dark mode, Android input handling, and the interactive flow around the displays and modals.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>Live market data updates the dashboard</h3><p>The app fetches Bitcoin pricing from an external source and uses it to compute BTC/SATS and fiat equivalents, along with change-period displays.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>User state stays in the browser</h3><p>Interactions such as language choice and dark mode preference are handled locally, keeping the app lightweight while still feeling dynamic.</p></div></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Architecture Map</h2><p>The project is static, but it is organized more like a small hand-built application than a single-file toy page.</p></div></div>
+      <div class="two-col">
+        <div class="card callout"><div class="accent blue">Key files</div><div class="tableish">
+          <div class="row"><strong>index.html</strong><span>Main UI, modal markup, asset loading, and script entry points.</span></div>
+          <div class="row"><strong>css/styles.css</strong><span>All styling, layout, responsiveness, and visual modes.</span></div>
+          <div class="row"><strong>js/core.js</strong><span>Core conversion logic, translation dictionary, and formatting behavior.</span></div>
+          <div class="row"><strong>js/app.js</strong><span>UI interaction, modal/panel behavior, dark mode, and mobile-specific logic.</span></div>
+          <div class="row"><strong>assets/</strong><span>Brand and interface assets like icons and imagery.</span></div>
+          <div class="row"><strong>archive/</strong><span>Previous or experimental versions kept for reference.</span></div>
+        </div></div>
+        <div class="code-card"><h3>Important files</h3><pre>index.html
+css/styles.css
+js/core.js
+js/app.js
+assets/
+archive/</pre><p>This is a good example of a project that is still “plain HTML/CSS/JS,” but has enough interaction depth that it behaves like a small product rather than a basic static page.</p></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Data and Storage</h2><p>The app blends live price data with browser-only preferences and interaction state.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">External data</div><h3>Market pricing comes from an API</h3><ul><li>The calculator uses live Bitcoin price information rather than only fixed inputs.</li><li>Currency conversion depends on that market data being available.</li><li>The price view includes change tracking across multiple time windows.</li><li>This makes the project more dynamic than an offline-only static calculator.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Local interaction state</div><h3>Preferences stay in the browser</h3><ul><li>Language preference is handled locally.</li><li>Dark mode state is persisted in localStorage.</li><li>Android-specific and keypad behavior are handled client-side.</li><li>No account, backend persistence, or database is required.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Run Commands</h2><p>The app can be opened directly or served with any tiny static server.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Local usage</h3><pre>open index.html
+
+# or
+python -m http.server</pre><p>The README recommends serving it with a small local server, but the project itself has no package install step or build process.</p></article>
+        <article class="card mini-list"><div class="accent teal">Environment setup</div><h3>What the project expects</h3><ul><li>No package manager setup.</li><li>No framework runtime.</li><li>No environment variables.</li><li>Network access is needed for live BTC pricing.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Bottom Line</h2><p>The shortest honest summary of the stack.</p></div></div>
+      <div class="card callout"><p>BTC Calculator is a <strong>browser-first static app</strong> built with <strong>HTML, CSS, and modular vanilla JavaScript</strong>, but it goes beyond a simple static utility by incorporating <strong>live Bitcoin market data</strong>, multilingual UI, dark mode, and mobile-specific interaction handling.</p></div>
+      <p class="footer-note">Source basis for this page: the actual files in <span class="path">/Users/rocha/Documents/AI-Projects/mybtc-calculator</span>, including <span class="path">index.html</span>, <span class="path">css/styles.css</span>, <span class="path">js/core.js</span>, <span class="path">js/app.js</span>, and the project README.</p>
+    </section>
+  </main>
+</BaseLayout>

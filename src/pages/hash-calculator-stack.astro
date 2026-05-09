@@ -1,0 +1,85 @@
+---
+import ProjectHero from "../components/ProjectHero.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+
+const project = projects.find((entry) => entry.slug === "hash-calculator-stack")!;
+const stackRows = [
+  { label: "Type", value: "Static browser app" },
+  { label: "Language", value: "HTML + CSS + JavaScript" },
+  { label: "Architecture", value: "Multi-file vanilla JS" },
+  { label: "UI", value: "Custom controls + modals" },
+  { label: "i18n", value: "English + Portuguese" },
+  { label: "Data", value: "Embedded miner reference data" },
+  { label: "Build step", value: "None" },
+  { label: "Runtime", value: "Browser only" },
+];
+---
+
+<BaseLayout title="Hash Cost Calculator Tech Stack" currentSlug={project.slug}>
+  <ProjectHero title={project.title} lead={project.summary} stackRows={stackRows} />
+
+  <main>
+    <section><div class="section-head"><div><h2>Main Stack</h2><p>What is used in this mining cost calculator and how the pieces are split up.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Markup</div><h3>Single static HTML page</h3><p>The page structure is defined in one HTML file, including the calculator UI, custom select markup, result display, help modal, and miner comparison modal.</p></article>
+        <article class="card"><div class="accent teal">Styling</div><h3>Custom CSS</h3><p>The visual layer is built with a standalone stylesheet rather than a CSS framework. It includes branded typography, custom form styling, result panels, and responsive behavior.</p></article>
+        <article class="card"><div class="accent violet">JavaScript structure</div><h3>Vanilla JS split by concern</h3><p>Unlike a one-file static app, this project separates concerns into multiple scripts for menu behavior, modal logic, translation handling, and calculator interaction.</p></article>
+        <article class="card"><div class="accent amber">Internationalization</div><h3>Built-in EN/PT translation system</h3><p>The app includes a manual translation dictionary and page update flow, letting the same interface switch between English and Portuguese without a framework i18n library.</p></article>
+        <article class="card"><div class="accent blue">Reference data</div><h3>Embedded miner examples</h3><p>Miner comparison and default reference values are shipped directly in the frontend, so the calculator can work entirely offline after load without fetching catalog data.</p></article>
+        <article class="card"><div class="accent teal">Runtime model</div><h3>No backend or build pipeline</h3><p>The project is a browser-only calculator. It has no bundler, package manifest, backend API, or database layer, which keeps deployment and local usage extremely simple.</p></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>How It Runs</h2><p>The app is assembled in the browser from one HTML page and several helper scripts.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>The browser loads the HTML shell</h3><p><span class="path">index.html</span> defines the structure for inputs, miner selection, result areas, language toggles, and modal content.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>Custom CSS applies the branded UI</h3><p><span class="path">styles.css</span> sets the layout, card look, typography, spacing, and adaptive behavior across screen sizes.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>Translation bootstraps the interface</h3><p><span class="path">translate.js</span> loads the current language, swaps labels and helper text, and coordinates the bilingual display logic.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>Menu and modal scripts handle interaction</h3><p><span class="path">menu.js</span> and <span class="path">modal.js</span> manage custom UI behavior such as overlays, picker interaction, and help or miner-reference popups.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>The calculator updates results in-place</h3><p>User input drives browser-side calculations for energy cost estimation and updates the rendered results immediately without any server communication.</p></div></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Architecture Map</h2><p>This is still a static app, but more modular than the simpler calculators in the workspace.</p></div></div>
+      <div class="two-col">
+        <div class="card callout"><div class="accent blue">Key files</div><div class="tableish">
+          <div class="row"><strong>index.html</strong><span>Main UI shell and structural markup for the calculator.</span></div>
+          <div class="row"><strong>styles.css</strong><span>Full styling layer for layout, forms, cards, and responsive design.</span></div>
+          <div class="row"><strong>menu.js</strong><span>Custom select/menu behavior for miner choice and interaction flows.</span></div>
+          <div class="row"><strong>modal.js</strong><span>Modal open/close logic for compare/help content.</span></div>
+          <div class="row"><strong>translate.js</strong><span>Translation dictionary and page update logic for EN/PT mode.</span></div>
+          <div class="row"><strong>tax.ico</strong><span>Project favicon asset.</span></div>
+        </div></div>
+        <div class="code-card"><h3>Important files</h3><pre>index.html
+styles.css
+menu.js
+modal.js
+translate.js
+tax.ico</pre><p>This project shows a useful middle ground between raw inline JavaScript and a full framework: it is still static, but the interaction logic has been split into focused browser scripts.</p></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Data and Interaction</h2><p>The calculator is driven by embedded reference data and in-browser state.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Input model</div><h3>User input controls the estimate</h3><ul><li>Hashrate, power, efficiency, and tariff values are entered or prefilled from miner examples.</li><li>The calculator updates cost estimates directly in the browser.</li><li>No backend persistence or account system is involved.</li><li>The app is designed for quick what-if comparisons.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Reference behavior</div><h3>Embedded examples and bilingual copy</h3><ul><li>Miner examples are bundled into the frontend experience.</li><li>Translation strings are stored directly in JavaScript objects.</li><li>The app can run without network calls once loaded.</li><li>Interaction richness comes from custom scripts rather than external UI libraries.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Run Commands</h2><p>No install step is required unless you prefer serving it over localhost.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Local usage</h3><pre>open index.html
+
+# or
+python -m http.server</pre><p>The project can be opened directly as a static page or served from a tiny local server if you want URL-based testing.</p></article>
+        <article class="card mini-list"><div class="accent teal">Environment setup</div><h3>What the project expects</h3><ul><li>No dependency installation.</li><li>No environment variables.</li><li>No API keys.</li><li>No framework runtime.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Bottom Line</h2><p>The shortest honest summary of the stack.</p></div></div>
+      <div class="card callout"><p>Hash Cost Calculator is a <strong>modular static web app</strong> built with <strong>HTML, CSS, and multi-file vanilla JavaScript</strong>. Its standout trait is that it adds richer UI behavior, bilingual support, and reference data without crossing into a framework-based architecture.</p></div>
+      <p class="footer-note">Source basis for this page: the actual files in <span class="path">/Users/rocha/Documents/AI-Projects/hash-calculator</span>, including <span class="path">index.html</span>, <span class="path">styles.css</span>, <span class="path">menu.js</span>, <span class="path">modal.js</span>, and <span class="path">translate.js</span>.</p>
+    </section>
+  </main>
+</BaseLayout>

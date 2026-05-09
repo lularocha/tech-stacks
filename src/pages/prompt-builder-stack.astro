@@ -1,0 +1,94 @@
+---
+import ProjectHero from "../components/ProjectHero.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+
+const project = projects.find((entry) => entry.slug === "prompt-builder-stack")!;
+const stackRows = [
+  { label: "Framework", value: "Next.js 14" },
+  { label: "UI", value: "React 18" },
+  { label: "Language", value: "TypeScript" },
+  { label: "Styling", value: "Tailwind CSS" },
+  { label: "AI", value: "Anthropic SDK + Claude Sonnet 4" },
+  { label: "Backend", value: "App Router API route" },
+  { label: "Features", value: "Prompt assembly + image analysis" },
+  { label: "Runtime", value: "Node.js + browser" },
+];
+---
+
+<BaseLayout title="Prompt Builder Tech Stack" currentSlug={project.slug}>
+  <ProjectHero title={project.title} lead={project.summary} stackRows={stackRows} />
+
+  <main>
+    <section><div class="section-head"><div><h2>Main Stack</h2><p>What powers this AI prompt authoring tool and how the frontend and backend are split.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Framework</div><h3>Next.js 14 App Router</h3><p>The project is built on Next.js with the App Router, which gives it a single codebase for frontend UI, route structure, global styling, and server-side API handling.</p></article>
+        <article class="card"><div class="accent teal">UI layer</div><h3>React 18</h3><p>The interface is a React app composed of focused components for system prompt sections, user prompt sections, examples, output rendering, and information overlays.</p></article>
+        <article class="card"><div class="accent violet">Language</div><h3>TypeScript</h3><p>The app and its API route are written in TypeScript, which helps structure prompt-building state, file-analysis responses, component props, and utility logic.</p></article>
+        <article class="card"><div class="accent amber">Styling</div><h3>Tailwind CSS</h3><p>The visual system uses Tailwind and custom global styling to create the premium dark UI, spacing system, and responsive layout rather than a traditional CSS file-per-component approach.</p></article>
+        <article class="card"><div class="accent blue">AI integration</div><h3>Anthropic SDK</h3><p>The app sends uploaded image data to Claude through the official Anthropic SDK, using an internal API route to generate contextual prompt suggestions from visual references.</p></article>
+        <article class="card"><div class="accent teal">Interaction model</div><h3>Real-time prompt assembly</h3><p>The main product value is not just static form entry. The app continuously assembles structured prompt output as the user edits sections and augments it with AI-assisted suggestions.</p></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>How It Runs</h2><p>The app combines browser-side prompt editing with server-side image analysis.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>Next.js serves the app shell</h3><p><span class="path">app/page.tsx</span> renders the main interface and mounts the prompt-building experience within the App Router structure.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>React manages prompt state</h3><p>The core builder component coordinates prompt sections, examples, uploaded reference files, project naming, and generated output text in client-side state.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>The browser can upload a visual reference</h3><p>Users can drag or select images and supporting files, then trigger AI analysis to extract persona, constraints, task, requirements, and tech-stack suggestions.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>The API route calls Claude</h3><p><span class="path">app/api/analyze-image/route.ts</span> receives base64 image data, sends it to Claude Sonnet 4 through the Anthropic SDK, and parses the structured JSON suggestions.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>The UI incorporates the suggestions</h3><p>The React frontend receives the generated recommendations and surfaces them back into the builder flow, helping the user create a stronger final prompt.</p></div></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Architecture Map</h2><p>This project is a modern full-stack frontend tool rather than a purely static page.</p></div></div>
+      <div class="two-col">
+        <div class="card callout"><div class="accent blue">Key folders</div><div class="tableish">
+          <div class="row"><strong>app/</strong><span>App Router pages, root layout, global CSS, and the image-analysis API route.</span></div>
+          <div class="row"><strong>components/</strong><span>Main prompt builder UI, output renderer, file-analysis section, and helper overlays.</span></div>
+          <div class="row"><strong>lib/</strong><span>Utility helpers for class merging and shared support logic.</span></div>
+          <div class="row"><strong>public/</strong><span>Static assets like the favicon.</span></div>
+          <div class="row"><strong>backlog/</strong><span>Roadmap, documentation, and product planning notes.</span></div>
+          <div class="row"><strong>app/docs/</strong><span>Supporting prompt guidance files and reference material used by the product.</span></div>
+        </div></div>
+        <div class="code-card"><h3>Important files</h3><pre>package.json
+next.config.js
+tailwind.config.ts
+tsconfig.json
+
+app/page.tsx
+app/layout.tsx
+app/globals.css
+app/api/analyze-image/route.ts
+
+components/prompt-builder.tsx
+components/generated-prompt.tsx
+components/section-examples.tsx</pre><p>This project is structurally closer to Card Tracker than to the static calculators, but its value is centered on AI-assisted authoring rather than data dashboards.</p></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Data and AI Layer</h2><p>The app is primarily about shaping and exporting prompt content, with optional server-side AI assistance.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Client-side authoring</div><h3>Prompt composition lives in the browser</h3><ul><li>Users build system and user prompts interactively.</li><li>The generated prompt view updates in real time.</li><li>Export and copy behavior are client-facing workflow features.</li><li>The app is useful even before AI analysis is triggered.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Server-side analysis</div><h3>Claude is used for visual prompt suggestions</h3><ul><li>The analyze-image route accepts image data and media type.</li><li>Claude returns structured JSON suggestion groups.</li><li>The route validates input and handles API-key errors.</li><li>The AI layer enriches the authoring flow rather than generating the entire product output by itself.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Run Commands</h2><p>The normal Next.js local and production workflow applies here.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Scripts</h3><pre>npm install
+npm run dev
+
+npm run build
+npm start
+npm run lint</pre><p>This is a standard Next.js workflow. The AI-assisted image analysis path also requires the Anthropic API key to be configured.</p></article>
+        <article class="card mini-list"><div class="accent teal">Environment setup</div><h3>What the app expects</h3><ul><li><code>ANTHROPIC_API_KEY</code> for the image-analysis route.</li><li>Node.js and npm.</li><li>No separate database is required for the current app shape.</li><li>The frontend and API route are served from the same Next.js app.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Bottom Line</h2><p>The shortest honest summary of the stack.</p></div></div>
+      <div class="card callout"><p>Prompt Builder is a <strong>Next.js + React + TypeScript</strong> application with a focused <strong>Claude-powered backend route</strong>. It combines structured prompt authoring, file-aware workflow, and AI-assisted suggestion generation inside a single App Router product.</p></div>
+      <p class="footer-note">Source basis for this page: the actual files in <span class="path">/Users/rocha/Documents/AI-Projects/prompt-builder</span>, including <span class="path">package.json</span>, <span class="path">app/page.tsx</span>, <span class="path">app/api/analyze-image/route.ts</span>, the project README, and related component files.</p>
+    </section>
+  </main>
+</BaseLayout>
