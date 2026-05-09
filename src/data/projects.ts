@@ -19,7 +19,7 @@ export const projects: ProjectEntry[] = [
       en:
         "A dependency-light Bitcoin calculator that converts between BTC, SATS, and multiple fiat currencies with live price data. It is built with plain HTML, CSS, and modular JavaScript, including multilingual UI and mobile-specific interaction handling.",
       pt:
-        "Uma calculadora de Bitcoin enxuta que converte entre BTC, SATS e várias moedas fiduciárias com dados de preço em tempo real. Ela é construída com HTML, CSS e JavaScript modular, incluindo interface multilíngue e comportamentos de interação específicos para mobile.",
+        "Uma calculadora de Bitcoin leve que converte entre BTC, SATS e várias moedas fiduciárias com dados de preço em tempo real. Ela é construída com HTML, CSS e JavaScript modular, incluindo interface multilíngue e comportamentos de interação específicos para mobile.",
     },
     liveUrl: "https://sugiro-mybtc.vercel.app/",
     imageSrc: "/project-images/mybtc-calculator.png",
@@ -52,7 +52,7 @@ export const projects: ProjectEntry[] = [
     locales: ["en", "pt"],
   },
   {
-    slug: "sbe-animation-stack",
+    slug: "dots-animation-stack",
     title: "Dots Animation Tool",
     summary: {
       en:
