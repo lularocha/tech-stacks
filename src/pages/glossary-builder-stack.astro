@@ -19,13 +19,14 @@ const stackRows = [
 ];
 ---
 
-<BaseLayout title="Glossary Builder Tech Stack" currentSlug={project.slug}>
+<BaseLayout title="Glossary Builder Tech Stack" currentSlug={project.slug} locale="en">
   <ProjectHero
     title={project.title}
     lead="An AI-powered glossary generator built as a React single-page app. It takes a seed word, calls Claude through serverless API endpoints, generates a 12-term glossary, lets users expand individual terms, auto-saves work in the browser, and exports the result as markdown or a Word document."
     liveUrl={project.liveUrl}
     stackRows={stackRows}
     imageSrc={project.imageSrc}
+    locale="en"
   />
 
   <main>

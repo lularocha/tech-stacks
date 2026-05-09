@@ -1,0 +1,94 @@
+---
+import ProjectHero from "../../components/ProjectHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+
+const project = projects.find((entry) => entry.slug === "glossary-builder-stack")!;
+const stackRows = [
+  { label: "Framework", value: "React 19 + Vite" },
+  { label: "Linguagem", value: "TypeScript" },
+  { label: "Estilo", value: "Tailwind CSS v4" },
+  { label: "IA", value: "Anthropic SDK + Claude Sonnet 4" },
+  { label: "Backend", value: "Funções serverless da Vercel" },
+  { label: "Rotas de API", value: "<code>/api/generate</code> + <code>/api/expand</code>" },
+  { label: "Armazenamento", value: "localStorage" },
+  { label: "Exportação", value: "Markdown + DOCX" },
+];
+---
+
+<BaseLayout title="Glossary Builder Tech Stack" currentSlug={project.slug} locale="pt">
+  <ProjectHero
+    title={project.title}
+    lead="Um gerador de glossários com IA construído como aplicação React single-page. Ele recebe uma palavra-semente, chama o Claude por endpoints serverless, gera um glossário com 12 termos, permite expandir cada termo, salva o trabalho no navegador e exporta o resultado em markdown ou Word."
+    liveUrl={project.liveUrl}
+    stackRows={stackRows}
+    imageSrc={project.imageSrc}
+    locale="pt"
+  />
+
+  <main>
+    <section><div class="section-head"><div><h2>Stack principal</h2><p>O que é usado neste projeto e qual responsabilidade cada camada assume.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Frontend</div><h3>React 19</h3><p>A interface é uma aplicação React single-page. O app principal coordena geração do glossário, exportações, estado do menu, alertas e o fluxo de expansão termo por termo dentro de um único app client-side.</p></article>
+        <article class="card"><div class="accent teal">Linguagem</div><h3>TypeScript</h3><p>O código de runtime é escrito em TypeScript, tanto no frontend quanto nos handlers serverless. Os tipos ajudam a estruturar objetos do glossário, payloads dos termos, traduções e respostas de API.</p></article>
+        <article class="card"><div class="accent violet">Build tool</div><h3>Vite 7</h3><p>Vite alimenta o servidor de desenvolvimento e a build de produção do frontend. O projeto também usa o plugin React do Vite, o que o coloca no grupo de apps React modernos, e não de sites em Next.js ou Astro.</p></article>
+        <article class="card"><div class="accent amber">Estilo</div><h3>Tailwind CSS v4</h3><p>Tailwind dirige a camada visual. O app importa Tailwind via <span class="path">src/index.css</span>, usa PostCSS no processamento e mantém grande parte do sistema visual baseada em utility classes.</p></article>
+        <article class="card"><div class="accent blue">Integração com IA</div><h3>Anthropic SDK + Claude</h3><p>A geração e expansão dos termos passam pelo SDK oficial da Anthropic. As funções serverless chamam o Claude Sonnet 4 e moldam o conteúdo retornado em JSON validado.</p></article>
+        <article class="card"><div class="accent teal">Padrão de backend</div><h3>Funções serverless da Vercel</h3><p>O backend vive em <span class="path">api/</span> como funções TypeScript. Esses endpoints constroem prompts, chamam o modelo, limpam o JSON, validam o conteúdo e devolvem respostas ao navegador.</p></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Como roda</h2><p>O fluxo principal desde a palavra-semente até o glossário gerado.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>React inicializa dentro do Vite</h3><p><span class="path">src/main.tsx</span> monta o app React e o envolve com um provider de idioma. Vite serve o frontend em desenvolvimento e gera o bundle estático em produção.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>O app carrega dados salvos do navegador</h3><p>Ao iniciar, a aplicação lê qualquer glossário salvo em localStorage e restaura a última sessão. O idioma da interface também é persistido e reidratado a partir do browser.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>O client chama endpoints serverless</h3><p>Quando o usuário gera um glossário ou expande um termo, o frontend envia JSON para <code>/api/generate</code> ou <code>/api/expand</code> por utilitários em <span class="path">src/utils/claudeApi.ts</span>.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>O backend chama Claude e valida o retorno</h3><p>As funções serverless constroem o prompt, chamam Claude, limpam problemas comuns de formatação e validam o JSON antes de devolver os dados ao frontend.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>React renderiza e exporta o glossário</h3><p>O app mostra os termos, permite reexpansões, salva o trabalho localmente e exporta o resultado final em markdown ou DOCX.</p></div></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Mapa da arquitetura</h2><p>O projeto se divide entre um frontend React e um backend pequeno, porém especializado, para IA.</p></div></div>
+      <div class="two-col">
+        <div class="card callout"><div class="accent blue">Pastas principais</div><div class="tableish">
+          <div class="row"><strong>src/</strong><span>Aplicação React, provider de idioma, componentes e utilitários client-side.</span></div>
+          <div class="row"><strong>api/</strong><span>Funções serverless para gerar glossários e expandir termos.</span></div>
+          <div class="row"><strong>src/utils/</strong><span>Wrappers de chamadas de API, exportação e lógica auxiliar.</span></div>
+          <div class="row"><strong>src/components/</strong><span>Interface principal, lista de termos, menus e ações do glossário.</span></div>
+          <div class="row"><strong>public/</strong><span>Assets estáticos como ícones e favicon.</span></div>
+          <div class="row"><strong>docs/ ou backlog</strong><span>Referências, notas de produto e documentação auxiliar do projeto.</span></div>
+        </div></div>
+        <div class="code-card"><h3>Arquivos importantes</h3><pre>package.json
+vite.config.ts
+src/main.tsx
+src/App.tsx
+src/index.css
+api/generate.ts
+api/expand.ts</pre><p>Arquiteturalmente, Glossary Builder se parece mais com um produto de IA focado em conteúdo do que com um site estático tradicional.</p></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Dados e camada de IA</h2><p>O valor do produto vem da combinação entre estado client-side, persistência local e geração assistida por Claude.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Estado do navegador</div><h3>O glossário vive no client</h3><ul><li>O trabalho do usuário é salvo em localStorage.</li><li>O app pode ser retomado depois sem backend de banco de dados.</li><li>O idioma também é mantido localmente.</li><li>Boa parte do valor da ferramenta existe mesmo antes da chamada de IA.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Fluxo com Claude</div><h3>A IA gera e expande os termos</h3><ul><li>Os endpoints chamam Claude para produzir glossários estruturados.</li><li>O backend limpa e valida o JSON retornado.</li><li>O usuário pode expandir termos individualmente.</li><li>A camada de IA enriquece o produto, mas o frontend continua no centro do fluxo.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Comandos para rodar</h2><p>O fluxo segue o padrão normal de uma aplicação React + Vite com funções serverless.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Scripts</h3><pre>npm install
+npm run dev
+
+npm run build
+npm run preview</pre><p>Além de Node e npm, o projeto precisa da configuração esperada para os endpoints de IA quando estiver em ambiente real de integração.</p></article>
+        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o app precisa</h3><ul><li>Node.js e npm.</li><li>Variáveis de ambiente para as chamadas à Anthropic, quando aplicável.</li><li>Nenhum banco de dados obrigatório.</li><li>Capacidade de executar frontend estático + funções serverless.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Resumo final</h2><p>A forma mais curta e honesta de resumir a stack.</p></div></div>
+      <div class="card callout"><p>Glossary Builder é um <strong>app em React + TypeScript + Vite</strong> com um <strong>backend serverless focado em Claude</strong>. Ele combina geração estruturada de conteúdo, persistência local e exportação em um produto compacto de IA aplicada.</p></div>
+      <p class="footer-note">Base desta página: os arquivos reais em <span class="path">/Users/rocha/Documents/AI-Projects/glossary-builder</span>, incluindo <span class="path">package.json</span>, a pasta <span class="path">src/</span>, os endpoints em <span class="path">api/</span> e o README do projeto.</p>
+    </section>
+  </main>
+</BaseLayout>

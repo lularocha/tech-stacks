@@ -1,0 +1,23 @@
+---
+import ProjectCard from "../../components/ProjectCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+---
+
+<BaseLayout title="AI Projects / Tech Stacks" locale="pt">
+  <main>
+    <section>
+      <div class="project-grid">
+        {projects.map((project) => (
+          <ProjectCard
+            title={project.title}
+            summary={project.summary.pt}
+            href={`/pt/${project.slug}.html`}
+            imageSrc={project.imageSrc}
+            locale="pt"
+          />
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

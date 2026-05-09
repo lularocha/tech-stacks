@@ -1,0 +1,89 @@
+---
+import ProjectHero from "../../components/ProjectHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+
+const project = projects.find((entry) => entry.slug === "sbe-animation-stack")!;
+const stackRows = [
+  { label: "Framework", value: "React 19 + Vite" },
+  { label: "Linguagem", value: "TypeScript" },
+  { label: "Estilo", value: "CSS" },
+  { label: "Backend", value: "Middleware local de exportação no Vite" },
+  { label: "Saída", value: "Exportação de SVG + Markdown" },
+  { label: "Runtime", value: "Navegador + filesystem local em Node.js" },
+  { label: "Modos de design", value: "Orbit + Lines" },
+  { label: "Tooling", value: "ESLint" },
+];
+---
+
+<BaseLayout title="Dots Animation Tool Tech Stack" currentSlug={project.slug} locale="pt">
+  <ProjectHero title={project.title} lead={project.summary.pt} liveUrl={project.liveUrl} stackRows={stackRows} imageSrc={project.imageSrc} locale="pt" />
+
+  <main>
+    <section><div class="section-head"><div><h2>Stack principal</h2><p>O que sustenta esta ferramenta de estudo visual e por que ela é diferente de uma demo estática comum.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Frontend</div><h3>React 19</h3><p>A interface é uma aplicação React que gerencia controles, estado do preview ao vivo, timing, seleção de modo de animação e interações de exportação no navegador.</p></article>
+        <article class="card"><div class="accent teal">Linguagem</div><h3>TypeScript</h3><p>Código da aplicação, definições de cena, lógica de exportação e configuração do Vite são escritos em TypeScript, o que ajuda a manter consistência entre parâmetros visuais e estrutura de saída.</p></article>
+        <article class="card"><div class="accent violet">Build tool</div><h3>Vite 7</h3><p>Vite cuida do servidor local, da build de produção, do preview e dos pontos de extensão via plugin que alimentam a rota de exportação local.</p></article>
+        <article class="card"><div class="accent amber">Modelo de animação</div><h3>Geração de SVG baseada em cena</h3><p>O app gera visuais SVG a partir de dados estruturados de cena/estado, em vez de embutir animações fixas. Isso torna o sistema visual paramétrico e orientado à exportação.</p></article>
+        <article class="card"><div class="accent blue">Camada de exportação</div><h3>Saída em arquivos locais</h3><p>A ferramenta exporta não apenas SVG, mas também snapshots em markdown, usando rota local e utilitários de filesystem em Node.js em vez de downloads simples no browser.</p></article>
+        <article class="card"><div class="accent teal">Tooling de desenvolvimento</div><h3>ESLint + plugins React</h3><p>O projeto usa lint moderno e uma toolchain padrão de React/Vite/TypeScript, ficando muito mais próximo do Glossary Builder do que das utilities estáticas do workspace.</p></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Como roda</h2><p>O app combina controles no navegador com uma rota local de exportação sustentada por Node.js.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>Vite serve a aplicação React</h3><p>O projeto começa como um app React normal com Vite, em que <span class="path">src/main.tsx</span> monta a interface e <span class="path">src/App.tsx</span> conduz a ferramenta principal.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>A UI edita os parâmetros da animação</h3><p>Os controles do navegador ajustam estado de cena, modo, timing, parâmetros de design e comportamento de preview da composição visual ativa.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>Helpers de cena geram o visual</h3><p><span class="path">src/lib/scene.ts</span> define designs, metadados de controle, defaults e a lógica de geração SVG que alimenta o preview.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>A rota de exportação recebe o snapshot</h3><p>O app envia o SVG e os dados estruturados do snapshot para <code>/api/export</code>, implementado via middleware customizado do Vite em vez de um backend separado.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>Node grava SVG e markdown no disco</h3><p>O middleware de exportação usa utilitários de filesystem para salvar SVG e um markdown correspondente em <span class="path">svg-export/</span> com nomes incrementados.</p></div></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Mapa da arquitetura</h2><p>É um app frontend com um backend local de exportação embutido na própria toolchain.</p></div></div>
+      <div class="two-col">
+        <div class="card callout"><div class="accent blue">Pastas principais</div><div class="tableish">
+          <div class="row"><strong>src/</strong><span>Aplicação React principal, estilos e lógica de cena/exportação.</span></div>
+          <div class="row"><strong>src/lib/</strong><span>Definições de cena e helpers de markdown de exportação.</span></div>
+          <div class="row"><strong>public/</strong><span>Assets estáticos como favicon.</span></div>
+          <div class="row"><strong>svg-export/</strong><span>Arquivos SVG e snapshots markdown gerados.</span></div>
+          <div class="row"><strong>video-examples/</strong><span>Exemplos gravados de uso da ferramenta.</span></div>
+          <div class="row"><strong>dist/</strong><span>Saída de build frontend do Vite.</span></div>
+        </div></div>
+        <div class="code-card"><h3>Arquivos importantes</h3><pre>package.json
+vite.config.ts
+src/App.tsx
+src/main.tsx
+src/index.css
+src/lib/scene.ts
+src/lib/export.ts
+svg-export/</pre><p>A decisão arquitetural mais marcante aqui é implementar o comportamento de exportação dentro do middleware do Vite, e não como um serviço de API hospedado separadamente.</p></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Dados e modelo de exportação</h2><p>O valor central da ferramenta está na exploração visual e na exportação local estruturada.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Modelo de estado</div><h3>A saída da animação deriva do estado do app</h3><ul><li>Os designs são parametrizados, não hard-coded como uma única animação fixa.</li><li>O estado em React dirige o preview ao vivo.</li><li>Os modos Orbit e Lines representam famílias visuais diferentes.</li><li>O app é feito para iteração e variação.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Modelo de exportação</div><h3>Arquivos locais fazem parte do fluxo</h3><ul><li>Os SVGs são gravados em disco, não apenas baixados no navegador.</li><li>Cada export inclui um snapshot em markdown do estado atual.</li><li>A rota do Vite gera nomes numerados para os arquivos.</li><li>O fluxo é otimizado para uso criativo local, não para um deployment puramente estático.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Comandos para rodar</h2><p>O app segue o fluxo normal do Vite, com o suporte a exportação embutido na configuração do servidor.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Scripts</h3><pre>npm install
+npm run dev
+
+npm run build
+npm run preview
+npm run lint</pre><p><code>npm run dev</code> é especialmente importante aqui, porque a rota local de exportação fica conectada à configuração do servidor Vite.</p></article>
+        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o app precisa</h3><ul><li>Node.js e npm.</li><li>Nenhuma API key externa.</li><li>Permissão de escrita em disco para exportar localmente.</li><li>Fluxo local quando a exportação faz parte do uso.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Resumo final</h2><p>A forma mais curta e honesta de resumir a stack.</p></div></div>
+      <div class="card callout"><p>Dots Animation Tool é uma <strong>ferramenta criativa em Vite + React + TypeScript</strong> com um <strong>backend local de exportação embutido no Vite</strong>. Ela está mais próxima de uma utility de workstation para design do que de um site estático ou app CRUD convencional.</p></div>
+      <p class="footer-note">Base desta página: os arquivos reais em <span class="path">/Users/rocha/Documents/AI-Projects/sbe-animation</span>, incluindo <span class="path">package.json</span>, <span class="path">vite.config.ts</span>, <span class="path">src/App.tsx</span>, o README e os arquivos de exportação relacionados.</p>
+    </section>
+  </main>
+</BaseLayout>

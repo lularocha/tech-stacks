@@ -1,0 +1,92 @@
+---
+import ProjectHero from "../../components/ProjectHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+
+const project = projects.find((entry) => entry.slug === "capital-gains-calculator-stack")!;
+const stackRows = [
+  { label: "Tipo", value: "Calculadora estática de página única" },
+  { label: "Linguagem", value: "HTML + CSS + JavaScript" },
+  { label: "Estilo", value: "CSS customizado" },
+  { label: "Lógica", value: "JavaScript inline no navegador" },
+  { label: "Domínio", value: "Ganho de capital + conversão PTAX" },
+  { label: "Fonte de dados", value: "Entrada do usuário + referência PTAX do BCB" },
+  { label: "Build", value: "Nenhum" },
+  { label: "Runtime", value: "Somente navegador" },
+];
+---
+
+<BaseLayout title="Capital Gains Calculator Tech Stack" currentSlug={project.slug} locale="pt">
+  <ProjectHero title={project.title} lead={project.summary.pt} liveUrl={project.liveUrl} stackRows={stackRows} imageSrc={project.imageSrc} locale="pt" />
+
+  <main>
+    <section>
+      <div class="section-head"><div><h2>Stack principal</h2><p>O que sustenta esta calculadora e como a implementação se mantém extremamente leve.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Markup</div><h3>HTML puro</h3><p>O app é um único documento HTML que define toda a interface, incluindo formulário, painéis de resultado, botão de ajuda e conteúdo modal. Não existe framework nem sistema de componentes.</p></article>
+        <article class="card"><div class="accent teal">Estilo</div><h3>CSS customizado</h3><p>O visual é controlado por uma única folha de estilo. O projeto usa uma aparência própria, regras responsivas e tipografia importada sem depender de Tailwind, Bootstrap ou pipeline de build.</p></article>
+        <article class="card"><div class="accent violet">Lógica</div><h3>JavaScript vanilla</h3><p>A lógica da calculadora roda diretamente no navegador com funções em JavaScript puro. Validação de inputs, cálculos, atualização do DOM e comportamento do modal são implementados sem bibliotecas externas.</p></article>
+        <article class="card"><div class="accent amber">Lógica de domínio</div><h3>Cálculo fiscal e cambial</h3><p>O foco do app é converter valores de compra e venda com cotações PTAX, estimando lucro bruto, imposto, IOF e valor líquido em operações com ações americanas sob a ótica fiscal brasileira.</p></article>
+        <article class="card"><div class="accent blue">Referência externa</div><h3>Contexto PTAX do BCB</h3><p>A calculadora leva o usuário à página histórica de PTAX do Banco Central e explica qual lado da PTAX é relevante na compra e na venda. Ela não automatiza essa consulta.</p></article>
+        <article class="card"><div class="accent teal">Modelo de runtime</div><h3>Sem etapa de build</h3><p>Este projeto é totalmente estático. Ele pode ser aberto diretamente no navegador ou servido por qualquer servidor estático simples, o que torna uso local e deploy muito fáceis.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Como roda</h2><p>Toda a aplicação executa client-side dentro de uma única página no navegador.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>O navegador carrega uma única página HTML</h3><p>A interface, os rótulos, os campos de entrada, as áreas de resultado e a marcação do modal ficam todos embutidos em <span class="path">index.html</span>.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>A folha de estilo define a interface</h3><p><span class="path">styles.css</span> fornece toda a camada visual, incluindo layout, tipografia, botões, modal e ajustes mobile.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>A entrada do usuário dirige o cálculo</h3><p>Quando o usuário informa PTAX e valores da operação e clica em calcular, o JavaScript inline valida os campos e executa as contas de conversão.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>A página atualiza os campos de resultado</h3><p>O app escreve os valores calculados diretamente em nós do DOM para custo de aquisição, valor de venda, lucro bruto, imposto, IOF, lucro líquido e análises percentuais.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>O modal explicativo vive na própria página</h3><p>O conteúdo de ajuda é implementado no mesmo documento e alternado com mudanças simples de classe e display no DOM, sem um sistema de componentes.</p></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Mapa da arquitetura</h2><p>A estrutura é simples: uma página, uma folha de estilo e uma camada de lógica inline.</p></div></div>
+      <div class="two-col">
+        <div class="card callout">
+          <div class="accent blue">Arquivos principais</div>
+          <div class="tableish">
+            <div class="row"><strong>index.html</strong><span>Markup da interface principal, modal de ajuda e lógica de cálculo inline.</span></div>
+            <div class="row"><strong>styles.css</strong><span>Design visual completo, regras de layout, tipografia e responsividade.</span></div>
+            <div class="row"><strong>tax.ico</strong><span>Asset de favicon do projeto.</span></div>
+          </div>
+        </div>
+        <div class="code-card">
+          <h3>Arquivos importantes</h3>
+          <pre>index.html
+styles.css
+tax.ico</pre>
+          <p>O projeto é essencialmente uma aplicação autocontida de navegador. Isso reduz manutenção, mas também limita estrutura e escalabilidade em comparação com apps baseados em componentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Dados e lógica</h2><p>A calculadora é guiada por input do usuário e não depende de armazenamento persistente nem serviços de backend.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Cálculo</div><h3>Todos os resultados são derivados no navegador</h3><ul><li>O usuário informa manualmente cotações e valores da operação.</li><li>A lógica em JavaScript valida os campos antes de mostrar qualquer resultado.</li><li>Lucro, IOF e imposto são calculados imediatamente na página.</li><li>Nenhum dado é enviado a backend nem salvo em banco.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Modelo de referência</div><h3>Ferramenta educativa e de simulação</h3><ul><li>A interface aponta para o histórico de PTAX do BCB.</li><li>O modal explica por que lados diferentes da PTAX importam em compra e venda.</li><li>A calculadora se apresenta como apoio à simulação, não como motor fiscal definitivo.</li><li>A própria página recomenda consultar um contador especializado.</li></ul></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Comandos para rodar</h2><p>Nenhum dev server de framework é necessário, a menos que você queira um.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Uso local</h3><pre>open index.html
+
+# ou
+python -m http.server</pre><p>Você pode abrir o arquivo diretamente no navegador ou servir a pasta com qualquer servidor estático pequeno, se preferir um fluxo baseado em URL local.</p></article>
+        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o app precisa</h3><ul><li>Nenhuma instalação de dependência.</li><li>Nenhuma variável de ambiente.</li><li>Nenhuma API key.</li><li>Nenhum runtime de backend.</li></ul></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Resumo final</h2><p>A forma mais curta e honesta de resumir a stack.</p></div></div>
+      <div class="card callout"><p>Capital Gains Calculator é um <strong>app web estático em HTML, CSS e JavaScript vanilla</strong>. Sua força está na simplicidade: tudo roda no navegador, não há etapa de build e a lógica de domínio é focada em um fluxo financeiro/fiscal bem específico.</p></div>
+      <p class="footer-note">Base desta página: os arquivos reais em <span class="path">/Users/rocha/Documents/AI-Projects/capital-gains-calculator</span>, incluindo <span class="path">index.html</span> e <span class="path">styles.css</span>.</p>
+    </section>
+  </main>
+</BaseLayout>

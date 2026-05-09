@@ -1,0 +1,94 @@
+---
+import ProjectHero from "../../components/ProjectHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+
+const project = projects.find((entry) => entry.slug === "card-tracker-stack")!;
+const stackRows = [
+  { label: "Framework", value: "Next.js 15" },
+  { label: "UI", value: "React 19" },
+  { label: "Linguagem", value: "JavaScript" },
+  { label: "Gráficos", value: "Recharts" },
+  { label: "Roteamento", value: "Next.js App Router" },
+  { label: "Dados do servidor", value: "Route handlers em <code>/app/api</code>" },
+  { label: "Armazenamento", value: "CSV, JSON, Upstash Redis opcional" },
+  { label: "Auth", value: "Senha + cookies HTTP-only" },
+];
+---
+
+<BaseLayout title="Card Tracker Tech Stack" currentSlug={project.slug} locale="pt">
+  <ProjectHero title={project.title} lead={project.summary.pt} liveUrl={project.liveUrl} stackRows={stackRows} imageSrc={project.imageSrc} locale="pt" />
+
+  <main>
+    <section>
+      <div class="section-head"><div><h2>Stack principal</h2><p>O que é usado neste projeto e qual papel cada peça desempenha.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Framework</div><h3>Next.js 15 com App Router</h3><p>Next.js é o framework principal. Ele cuida de rotas, renderização no servidor, endpoints de API e do processo de build. O projeto usa a pasta <span class="path">app/</span>, ou seja, segue o modelo mais novo de App Router em vez do router legado baseado em <span class="path">pages/</span>.</p></article>
+        <article class="card"><div class="accent teal">Camada de UI</div><h3>React 19</h3><p>React sustenta o dashboard interativo. O painel principal é um client component, então gráficos, filtros, atribuição de categoria, estado local e chamadas de fetch rodam no navegador depois que a aplicação carrega.</p></article>
+        <article class="card"><div class="accent violet">Linguagem</div><h3>JavaScript puro</h3><p>O código é escrito em JavaScript, não em TypeScript. Não existem arquivos de tipos nem configuração de TS, então o projeto fica mais leve, mas abre mão de checagem estática.</p></article>
+        <article class="card"><div class="accent amber">Gráficos</div><h3>Recharts</h3><p>Recharts é usado para a camada visual de relatórios. Ele dirige os gráficos de pizza e linha do dashboard e se encaixa naturalmente na árvore de componentes React.</p></article>
+        <article class="card"><div class="accent blue">Persistência</div><h3>CSV, JSON e Upstash Redis opcional</h3><p>Os dados de transação vêm de arquivos CSV mensais. As regras de categorização são semeadas em arquivos JSON. Em desenvolvimento local, as alterações podem ser persistidas em JSON; em deploy, o projeto pode usar Upstash Redis.</p></article>
+        <article class="card"><div class="accent teal">Runtime</div><h3>Runtime Node.js no servidor</h3><p>O código server-side usa APIs do Node como <span class="path">node:fs</span>, <span class="path">node:path</span> e <span class="path">node:crypto</span>. Isso significa que não é um site puramente estático: ele precisa de um runtime Node para ler arquivos, processar dados e atender requests autenticados.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Como roda</h2><p>A história de runtime, do request no browser ao dashboard renderizado.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>Next.js inicia a aplicação</h3><p>O projeto roda com <code>next dev</code> localmente e <code>next build</code> mais <code>next start</code> em produção. A rota principal vive em <span class="path">app/page.js</span>.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>O servidor valida a autenticação</h3><p>Antes de mostrar o dashboard, o servidor verifica cookies e senhas baseadas em ambiente em <span class="path">lib/auth.js</span>. Se o usuário não estiver autenticado, a aplicação renderiza uma tela de senha no lugar do painel.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>O dashboard client-side busca dados nas rotas de API</h3><p>Depois do login, o componente de dashboard no navegador chama <code>/api/months</code>, <code>/api/data/[month]</code> e <code>/api/categories</code>. Esses handlers rodam no servidor e retornam JSON.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>O servidor lê CSVs e regras de categoria</h3><p>O servidor carrega arquivos de fatura da pasta do perfil selecionado, parseia as linhas CSV, normaliza nomes de estabelecimentos, aplica regras de categorização e devolve os dados moldados ao client.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>React renderiza gráficos e visões de transações</h3><p>O componente client mantém meses carregados em estado local, calcula totais, filtra categorias, ordena transações e alimenta visualizações do Recharts e tabelas customizadas.</p></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Mapa da arquitetura</h2><p>O projeto é compacto, mas ainda assim possui uma divisão de responsabilidades bastante clara.</p></div></div>
+      <div class="two-col">
+        <div class="card callout"><div class="accent blue">Pastas principais</div><div class="tableish">
+          <div class="row"><strong>app/</strong><span>Pontos de entrada de rotas, layout, CSS global e route handlers de API.</span></div>
+          <div class="row"><strong>components/</strong><span>Componentes de UI em React, incluindo o dashboard interativo e a tela de senha.</span></div>
+          <div class="row"><strong>lib/</strong><span>Lógica central de auth, perfis, parsing de CSV, normalização e armazenamento de regras.</span></div>
+          <div class="row"><strong>statements/</strong><span>Arquivos CSV mensais de fatura do perfil principal.</span></div>
+          <div class="row"><strong>statements-ana/</strong><span>Conjunto de extratos para outro perfil.</span></div>
+          <div class="row"><strong>statements-demo/</strong><span>Dataset demo usado para exibir a aplicação sem expor dados reais.</span></div>
+        </div></div>
+        <div class="code-card"><h3>Arquivos importantes</h3><pre>package.json
+app/page.js
+app/layout.js
+app/globals.css
+app/api/
+components/
+lib/
+statements/</pre><p>Mesmo sendo pequeno, este projeto já se organiza como uma aplicação full-stack compacta, com separação nítida entre UI, lógica de domínio, dados e autenticação.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Dados e armazenamento</h2><p>Os dados financeiros estão em arquivos locais, enquanto as regras de categoria podem ser persistidas em camadas diferentes dependendo do ambiente.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Dados de origem</div><h3>Extratos vêm de CSVs</h3><ul><li>Cada mês de fatura é representado por um CSV local.</li><li>O servidor parseia e normaliza as transações quando a API é chamada.</li><li>Os dados não ficam em um banco relacional tradicional.</li><li>O projeto é orientado por arquivos, não por ORM.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Regras e persistência</div><h3>JSON local ou Redis em deploy</h3><ul><li>As categorias iniciais são semeadas por JSON.</li><li>Em ambiente local, alterações podem voltar para arquivos JSON.</li><li>Em produção, o app pode usar Upstash Redis para persistir regras.</li><li>O modelo é simples, mas flexível para um dashboard pessoal.</li></ul></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Comandos para rodar</h2><p>O fluxo segue o padrão de uma aplicação Next.js com runtime Node.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Scripts</h3><pre>npm install
+npm run dev
+
+npm run build
+npm start</pre><p>Além do Node e do npm, o app depende dos arquivos locais de statements e das variáveis de autenticação / persistência esperadas pelo ambiente.</p></article>
+        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o projeto precisa</h3><ul><li>Node.js e npm.</li><li>Arquivos de extrato disponíveis localmente.</li><li>Configuração de senha e, opcionalmente, sessão/persistência.</li><li>Redis opcional em ambientes hospedados.</li></ul></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><h2>Resumo final</h2><p>A forma mais curta e honesta de resumir a stack.</p></div></div>
+      <div class="card callout"><p>Card Tracker é um <strong>dashboard financeiro full-stack em Next.js + React</strong> que combina <strong>dados em CSV, lógica de categorização no servidor e visualizações interativas no client</strong>. É compacto, mas já mostra uma arquitetura de aplicação real.</p></div>
+      <p class="footer-note">Base desta página: os arquivos reais em <span class="path">/Users/rocha/Documents/AI-Projects/card-tracker</span>, incluindo <span class="path">package.json</span>, a pasta <span class="path">app/</span>, <span class="path">components/</span>, <span class="path">lib/</span> e os diretórios de statements.</p>
+    </section>
+  </main>
+</BaseLayout>

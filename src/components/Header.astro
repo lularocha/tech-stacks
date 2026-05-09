@@ -1,23 +1,49 @@
 ---
-import { projects, siteTitle } from "../data/projects";
+import {
+  getAlternatePath,
+  getHomePath,
+  getProjectPath,
+  projects,
+  siteTitle,
+  ui,
+  type Locale,
+} from "../data/projects";
 
 interface Props {
   currentSlug?: string;
+  locale?: Locale;
 }
 
-const { currentSlug } = Astro.props;
+const { currentSlug, locale = "en" } = Astro.props;
+const copy = ui[locale];
 ---
 
 <header class="site-header">
   <nav class="site-nav" aria-label="Primary">
     <div class="site-brand">
       <div class="site-kicker">sugiro.ai</div>
-      <a class="site-title" href="/">{siteTitle}</a>
+      <a class="site-title" href={getHomePath(locale)}>{siteTitle}</a>
     </div>
     <div class="nav-links">
+      <div class="locale-switcher" aria-label="Language switcher">
+        <a
+          class:list={["locale-link", locale === "en" && "active"]}
+          href={getAlternatePath(locale, "en", currentSlug)}
+          data-lang-switch="en"
+        >
+          EN
+        </a>
+        <a
+          class:list={["locale-link", locale === "pt" && "active"]}
+          href={getAlternatePath(locale, "pt", currentSlug)}
+          data-lang-switch="pt"
+        >
+          PT
+        </a>
+      </div>
       <details class="menu">
         <summary class="menu-summary">
-          <span class="sr-only">Projects</span>
+          <span class="sr-only">{copy.projectsMenuLabel}</span>
           <span class="menu-icon" aria-hidden="true">
             <span></span>
             <span></span>
@@ -27,11 +53,14 @@ const { currentSlug } = Astro.props;
         <button
           class="menu-overlay"
           type="button"
-          aria-label="Close projects menu"
+          aria-label={copy.closeProjectsMenu}
         ></button>
         <div class="menu-panel">
-          <a class:list={["menu-link", !currentSlug && "active"]} href="/">
-            Home
+          <a
+            class:list={["menu-link", !currentSlug && "active"]}
+            href={getHomePath(locale)}
+          >
+            {copy.home}
           </a>
           {projects.map((project) => (
             <a
@@ -39,7 +68,7 @@ const { currentSlug } = Astro.props;
                 "menu-link",
                 currentSlug === project.slug && "active",
               ]}
-              href={`/${project.slug}.html`}
+              href={getProjectPath(project, locale)}
             >
               {project.title}
             </a>

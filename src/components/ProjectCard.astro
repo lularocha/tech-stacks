@@ -4,10 +4,13 @@ interface Props {
   summary: string;
   href?: string;
   imageSrc?: string;
+  locale?: "en" | "pt";
 }
 
-const { title, summary, href, imageSrc } = Astro.props;
+const { title, summary, href, imageSrc, locale = "en" } = Astro.props;
 const Tag = href ? "a" : "article";
+const imageAlt =
+  locale === "pt" ? `Captura do projeto ${title}` : `${title} project screenshot`;
 ---
 
 <Tag
@@ -16,7 +19,7 @@ const Tag = href ? "a" : "article";
 >
   <div class="project-card-top">
     {imageSrc && (
-      <img class="project-card-image" src={imageSrc} alt={`${title} project screenshot`} />
+      <img class="project-card-image" src={imageSrc} alt={imageAlt} />
     )}
     <h2>{title}</h2>
     <p class="lead">{summary}</p>

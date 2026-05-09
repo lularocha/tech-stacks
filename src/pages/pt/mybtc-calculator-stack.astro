@@ -1,0 +1,85 @@
+---
+import ProjectHero from "../../components/ProjectHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+
+const project = projects.find((entry) => entry.slug === "mybtc-calculator-stack")!;
+const stackRows = [
+  { label: "Tipo", value: "App calculadora estático" },
+  { label: "Linguagem", value: "HTML + CSS + JavaScript" },
+  { label: "Arquitetura", value: "JavaScript modular vanilla" },
+  { label: "Dados", value: "API de preço do Bitcoin em tempo real" },
+  { label: "Moedas", value: "BTC, SATS, USD, BRL, EUR, GBP" },
+  { label: "i18n", value: "Inglês + Português" },
+  { label: "Build", value: "Nenhum" },
+  { label: "Runtime", value: "Navegador + API externa" },
+];
+---
+
+<BaseLayout title="BTC Calculator Tech Stack" currentSlug={project.slug} locale="pt">
+  <ProjectHero title={project.title} lead={project.summary.pt} liveUrl={project.liveUrl} stackRows={stackRows} imageSrc={project.imageSrc} locale="pt" />
+
+  <main>
+    <section><div class="section-head"><div><h2>Stack principal</h2><p>O que sustenta esta ferramenta de conversão de Bitcoin e por que ela é mais rica do que uma página estática básica.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Markup</div><h3>Interface em HTML puro</h3><p>A interface é definida em uma única página HTML, incluindo alternadores de moeda, modal de teclado, painel de informação, modal de ajuda e áreas dinâmicas para conversões entre BTC, SATS e moedas fiduciárias.</p></article>
+        <article class="card"><div class="accent teal">Estilo</div><h3>CSS customizado</h3><p>O sistema visual é totalmente customizado e inclui identidade visual, comportamento responsivo, suporte a teclado mobile, assets de ícones e suporte a dark mode.</p></article>
+        <article class="card"><div class="accent violet">Estrutura JavaScript</div><h3>Separação entre core e app</h3><p>O projeto separa a lógica de conversão de baixo nível da orquestração de interface. Isso torna preço, formatação, tradução, interação e renderização mais sustentáveis do que um script único.</p></article>
+        <article class="card"><div class="accent amber">Dados ao vivo</div><h3>API externa de preço do Bitcoin</h3><p>O app usa preços em tempo real para as conversões e para acompanhar variação, então ele é estático na estrutura, mas depende de uma fonte externa de mercado para entregar toda a funcionalidade.</p></article>
+        <article class="card"><div class="accent blue">Experiência</div><h3>Recursos multilíngues e mobile</h3><p>A calculadora suporta inglês e português, inclui tratamento específico para Android, fluxo com teclado customizado, lógica de dark mode e interações mais ricas com modais e painéis.</p></article>
+        <article class="card"><div class="accent teal">Modelo de runtime</div><h3>Sem bundler ou framework</h3><p>O projeto não tem manifesto de pacotes nem framework frontend. Ele se mantém leve ao depender de JavaScript de navegador, assets locais e um pequeno conjunto de scripts organizados manualmente.</p></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Como roda</h2><p>A calculadora combina assets estáticos com dados de mercado em tempo real dentro do navegador.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>O navegador carrega a estrutura estática</h3><p><span class="path">index.html</span> carrega a interface principal, assets de ícone, estruturas de modal e os arquivos JavaScript de entrada.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>A lógica central inicializa a conversão</h3><p><span class="path">js/core.js</span> concentra a lógica de moeda, a formatação de exibição, os dados de tradução e o comportamento principal da calculadora.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>A lógica da aplicação conecta a UI</h3><p><span class="path">js/app.js</span> coordena animações, painéis informativos, dark mode, tratamento de Android e o fluxo interativo dos displays e modais.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>Dados de mercado atualizam a tela</h3><p>O app busca preços de Bitcoin em uma fonte externa e usa esses dados para calcular equivalências entre BTC/SATS e moedas fiduciárias, além de mostrar variações por período.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>O estado do usuário fica no navegador</h3><p>Interações como idioma e preferência de dark mode são tratadas localmente, o que mantém o app leve, mas ainda bastante dinâmico.</p></div></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Mapa da arquitetura</h2><p>O projeto é estático, mas é organizado mais como um pequeno aplicativo artesanal do que como uma página única de demonstração.</p></div></div>
+      <div class="two-col">
+        <div class="card callout"><div class="accent blue">Arquivos principais</div><div class="tableish">
+          <div class="row"><strong>index.html</strong><span>Interface principal, marcação dos modais, carregamento de assets e pontos de entrada dos scripts.</span></div>
+          <div class="row"><strong>css/styles.css</strong><span>Todos os estilos, layout, responsividade e modos visuais.</span></div>
+          <div class="row"><strong>js/core.js</strong><span>Lógica de conversão, dicionário de tradução e comportamento de formatação.</span></div>
+          <div class="row"><strong>js/app.js</strong><span>Interações da UI, comportamento de modais e painéis, dark mode e lógica específica de mobile.</span></div>
+          <div class="row"><strong>assets/</strong><span>Assets de marca e interface, como ícones e imagens.</span></div>
+          <div class="row"><strong>archive/</strong><span>Versões anteriores ou experimentais mantidas para referência.</span></div>
+        </div></div>
+        <div class="code-card"><h3>Arquivos importantes</h3><pre>index.html
+css/styles.css
+js/core.js
+js/app.js
+assets/
+archive/</pre><p>Este é um bom exemplo de projeto que continua sendo “HTML/CSS/JS puro”, mas já tem profundidade suficiente de interação para se comportar como um pequeno produto.</p></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Dados e armazenamento</h2><p>O app mistura preços em tempo real com preferências e estado de interação salvos no próprio navegador.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Dados externos</div><h3>Os preços vêm de uma API</h3><ul><li>A calculadora usa preço de Bitcoin em tempo real em vez de apenas valores fixos.</li><li>A conversão depende desses dados de mercado estarem disponíveis.</li><li>A visualização de preço inclui janelas de variação em diferentes períodos.</li><li>Isso deixa o projeto mais dinâmico do que uma calculadora estática offline.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Estado local</div><h3>Preferências ficam no navegador</h3><ul><li>A preferência de idioma é tratada localmente.</li><li>O dark mode é persistido em localStorage.</li><li>Tratamentos de Android e fluxo de teclado ficam no client.</li><li>Não existe conta, backend de persistência nem banco de dados.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Comandos para rodar</h2><p>O app pode ser aberto diretamente ou servido por qualquer servidor estático mínimo.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Uso local</h3><pre>open index.html
+
+# ou
+python -m http.server</pre><p>O README sugere servir com um pequeno servidor local, mas o projeto em si não tem etapa de instalação nem build.</p></article>
+        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o projeto precisa</h3><ul><li>Nenhuma configuração de package manager.</li><li>Nenhum framework em runtime.</li><li>Nenhuma variável de ambiente.</li><li>Acesso à rede para buscar o preço ao vivo do BTC.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Resumo final</h2><p>A forma mais curta e honesta de descrever a stack.</p></div></div>
+      <div class="card callout"><p>BTC Calculator é um <strong>app estático orientado ao navegador</strong> construído com <strong>HTML, CSS e JavaScript modular vanilla</strong>, mas vai além de uma utility simples ao incorporar <strong>dados de mercado do Bitcoin em tempo real</strong>, interface multilíngue, dark mode e interações específicas para mobile.</p></div>
+      <p class="footer-note">Base desta página: os arquivos reais em <span class="path">/Users/rocha/Documents/AI-Projects/mybtc-calculator</span>, incluindo <span class="path">index.html</span>, <span class="path">css/styles.css</span>, <span class="path">js/core.js</span>, <span class="path">js/app.js</span> e o README do projeto.</p>
+    </section>
+  </main>
+</BaseLayout>

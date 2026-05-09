@@ -1,4 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const storageKey = "preferred-language";
+  const body = document.body;
+  const locale = body?.dataset.locale;
+  const pageKind = body?.dataset.pageKind;
+  const preferredLocale = window.localStorage.getItem(storageKey);
+
+  if (preferredLocale && pageKind === "home" && locale && preferredLocale !== locale) {
+    const target = preferredLocale === "pt" ? "/pt.html" : "/";
+
+    if (window.location.pathname !== target) {
+      window.location.replace(target);
+      return;
+    }
+  }
+
+  document.querySelectorAll("[data-lang-switch]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const nextLocale = link.getAttribute("data-lang-switch");
+
+      if (nextLocale) {
+        window.localStorage.setItem(storageKey, nextLocale);
+      }
+    });
+  });
+
   const menus = document.querySelectorAll(".menu");
 
   function closeOtherMenus(currentMenu) {

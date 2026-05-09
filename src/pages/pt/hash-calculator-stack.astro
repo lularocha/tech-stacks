@@ -1,0 +1,82 @@
+---
+import ProjectHero from "../../components/ProjectHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+
+const project = projects.find((entry) => entry.slug === "hash-calculator-stack")!;
+const stackRows = [
+  { label: "Tipo", value: "App estático de navegador" },
+  { label: "Linguagem", value: "HTML + CSS + JavaScript" },
+  { label: "Arquitetura", value: "Vanilla JS em múltiplos arquivos" },
+  { label: "UI", value: "Controles customizados + modais" },
+  { label: "i18n", value: "Inglês + Português" },
+  { label: "Dados", value: "Dados de referência de mineradores embutidos" },
+  { label: "Build", value: "Nenhum" },
+  { label: "Runtime", value: "Somente navegador" },
+];
+---
+
+<BaseLayout title="Hash Cost Calculator Tech Stack" currentSlug={project.slug} locale="pt">
+  <ProjectHero title={project.title} lead={project.summary.pt} liveUrl={project.liveUrl} stackRows={stackRows} imageSrc={project.imageSrc} locale="pt" />
+
+  <main>
+    <section><div class="section-head"><div><h2>Stack principal</h2><p>O que é usado nesta calculadora de custo de mineração e como as responsabilidades estão organizadas.</p></div></div>
+      <div class="grid cols-3">
+        <article class="card"><div class="accent blue">Markup</div><h3>Página estática única em HTML</h3><p>A estrutura da página é definida em um único arquivo HTML, incluindo a interface da calculadora, o select customizado, a área de resultados, o modal de ajuda e o modal de comparação de mineradores.</p></article>
+        <article class="card"><div class="accent teal">Estilo</div><h3>CSS customizado</h3><p>A camada visual é construída com uma folha de estilo própria, sem framework CSS. Ela inclui tipografia de marca, formulários customizados, painéis de resultado e comportamento responsivo.</p></article>
+        <article class="card"><div class="accent violet">Estrutura JavaScript</div><h3>Vanilla JS separado por responsabilidade</h3><p>Ao contrário de um app estático de um arquivo só, este projeto separa responsabilidades em scripts diferentes para menu, modais, tradução e interação da calculadora.</p></article>
+        <article class="card"><div class="accent amber">Internacionalização</div><h3>Sistema manual de tradução EN/PT</h3><p>O app inclui um dicionário de tradução e um fluxo de atualização de interface, permitindo que a mesma página alterne entre inglês e português sem biblioteca de i18n.</p></article>
+        <article class="card"><div class="accent blue">Dados de referência</div><h3>Exemplos de mineradores embutidos</h3><p>A comparação de mineradores e os valores de referência ficam embarcados no frontend, então a calculadora pode funcionar integralmente no navegador depois de carregar.</p></article>
+        <article class="card"><div class="accent teal">Modelo de runtime</div><h3>Sem backend nem pipeline de build</h3><p>O projeto é uma calculadora puramente de navegador. Não há bundler, manifesto de pacotes, API nem banco de dados, o que torna uso local e deploy extremamente simples.</p></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Como roda</h2><p>O app é montado no navegador a partir de uma única página HTML e vários scripts auxiliares.</p></div></div>
+      <div class="flow">
+        <div class="flow-step"><div class="num">1</div><div><h3>O navegador carrega uma única página</h3><p><span class="path">index.html</span> contém a estrutura da interface, os modais e a referência aos arquivos JavaScript.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>O CSS define a camada visual</h3><p><span class="path">styles.css</span> aplica layout, painéis, estilo dos controles, comportamento responsivo e aparência dos modais.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>Os scripts conectam os fluxos da interface</h3><p>Arquivos JavaScript separados controlam seleção de minerador, tradução, abertura de modal, cálculo e atualização da tela.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>Os dados embutidos dirigem a comparação</h3><p>O catálogo de referência de mineradores e os valores padrão são carregados diretamente do frontend, sem request a um serviço externo.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>O usuário obtém resultado imediatamente</h3><p>Hashrate, potência e tarifa local são usados para calcular consumo e custo estimado mensal diretamente no browser.</p></div></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Mapa da arquitetura</h2><p>Embora seja estático, o projeto é mais estruturado do que uma utility mínima em um único arquivo.</p></div></div>
+      <div class="two-col">
+        <div class="card callout"><div class="accent blue">Arquivos principais</div><div class="tableish">
+          <div class="row"><strong>index.html</strong><span>Interface principal, marcação dos modais e referências aos scripts.</span></div>
+          <div class="row"><strong>styles.css</strong><span>Todo o visual, responsividade, painéis e estilo dos controles.</span></div>
+          <div class="row"><strong>js/</strong><span>Scripts separados para navegação, tradução, modais e lógica da calculadora.</span></div>
+          <div class="row"><strong>miners.json / dados embutidos</strong><span>Valores de referência usados para preencher ou comparar modelos de mineradores.</span></div>
+          <div class="row"><strong>tax.ico</strong><span>Favicon do projeto.</span></div>
+        </div></div>
+        <div class="code-card"><h3>Arquivos importantes</h3><pre>index.html
+styles.css
+js/
+tax.ico</pre><p>Este projeto mostra um meio-termo útil entre JavaScript totalmente inline e um framework completo: continua estático, mas a interação foi separada em scripts focados.</p></div>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Dados e lógica</h2><p>A calculadora trabalha com valores fornecidos pelo usuário e catálogos embutidos no frontend.</p></div></div>
+      <div class="grid cols-2">
+        <article class="card mini-list"><div class="accent teal">Cálculo</div><h3>O resultado é produzido no navegador</h3><ul><li>O usuário escolhe um minerador ou preenche manualmente os valores.</li><li>Hashrate, potência e tarifa são combinados na lógica client-side.</li><li>A tela mostra consumo mensal e custo estimado imediatamente.</li><li>Nada precisa ser salvo nem enviado a um backend.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Conteúdo embutido</div><h3>Dados de referência vivem no frontend</h3><ul><li>Exemplos de mineradores são carregados localmente.</li><li>As traduções EN/PT também fazem parte da camada client-side.</li><li>O projeto não depende de banco de dados nem de API remota.</li><li>Isso simplifica hospedagem, manutenção e uso offline depois do load.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Comandos para rodar</h2><p>Não existe workflow de framework nem instalação de dependências.</p></div></div>
+      <div class="grid cols-2">
+        <article class="code-card"><h3>Uso local</h3><pre>open index.html
+
+# ou
+python -m http.server</pre><p>Você pode abrir o arquivo diretamente ou servir a pasta com um servidor estático mínimo se preferir trabalhar com uma URL local.</p></article>
+        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o projeto precisa</h3><ul><li>Nenhuma instalação via npm.</li><li>Nenhuma variável de ambiente.</li><li>Nenhuma API key.</li><li>Somente um navegador moderno.</li></ul></article>
+      </div>
+    </section>
+
+    <section><div class="section-head"><div><h2>Resumo final</h2><p>A forma mais curta e honesta de resumir a stack.</p></div></div>
+      <div class="card callout"><p>Hash Cost Calculator é um <strong>app estático de navegador</strong> feito com <strong>HTML, CSS e JavaScript puro</strong>, mas com uma camada de interface mais rica, tradução embutida e dados de comparação que o tornam mais robusto do que uma calculadora mínima.</p></div>
+      <p class="footer-note">Base desta página: os arquivos reais em <span class="path">/Users/rocha/Documents/AI-Projects/hash-calculator</span>, incluindo <span class="path">index.html</span>, <span class="path">styles.css</span>, a pasta <span class="path">js/</span> e o README do projeto.</p>
+    </section>
+  </main>
+</BaseLayout>

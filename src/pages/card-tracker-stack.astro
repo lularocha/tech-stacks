@@ -16,13 +16,14 @@ const stackRows = [
 ];
 ---
 
-<BaseLayout title="Card Tracker Tech Stack" currentSlug={project.slug}>
+<BaseLayout title="Card Tracker Tech Stack" currentSlug={project.slug} locale="en">
   <ProjectHero
     title={project.title}
-    lead={project.summary}
+    lead={project.summary.en}
     liveUrl={project.liveUrl}
     stackRows={stackRows}
     imageSrc={project.imageSrc}
+    locale="en"
   />
 
   <main>

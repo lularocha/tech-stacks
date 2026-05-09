@@ -2,17 +2,19 @@
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import "../styles/global.css";
+import type { Locale } from "../data/projects";
 
 interface Props {
   title: string;
   currentSlug?: string;
+  locale?: Locale;
 }
 
-const { title, currentSlug } = Astro.props;
+const { title, currentSlug, locale = "en" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,11 +22,11 @@ const { title, currentSlug } = Astro.props;
     <link rel="icon" href="/favicon.png" type="image/png" />
     <script src="/scripts/menu.js" defer></script>
   </head>
-  <body>
+  <body data-locale={locale} data-page-kind={currentSlug ? "project" : "home"}>
     <div class="wrap">
-      <Header currentSlug={currentSlug} />
+      <Header currentSlug={currentSlug} locale={locale} />
       <slot />
-      <Footer />
+      <Footer locale={locale} />
     </div>
   </body>
 </html>

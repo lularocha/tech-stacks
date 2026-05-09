@@ -1,6 +1,17 @@
+---
+import { ui, type Locale } from "../data/projects";
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "en" } = Astro.props;
+const copy = ui[locale];
+---
+
 <footer class="site-footer">
   <p>
-    Developed by Lula Rocha
+    {copy.footerPrefix}
     <a href="https://sugiro.ai" target="_blank" rel="noreferrer">sugiro.ai</a>
   </p>
 </footer>
