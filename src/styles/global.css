@@ -653,18 +653,19 @@ pre {
   padding: 10px 0;
 }
 
-.stack-row strong {
+.stack-row-label {
   color: var(--muted);
   font-size: 1.05rem;
   font-weight: 400;
   font-family: var(--sans);
 }
 
-.stack-row span {
+.stack-row > span:not(.stack-row-label) {
   color: var(--text);
   line-height: 1.55;
   font-size: 1.05rem;
   font-family: var(--sans);
+  font-weight: 700;
 }
 
 .stack-row code {

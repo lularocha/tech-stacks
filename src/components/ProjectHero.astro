@@ -65,7 +65,7 @@ const imageAlt =
         <div class="stack-grid">
           {stackRows.map((row) => (
             <div class="stack-row">
-              <strong>{row.label}</strong>
+              <span class="stack-row-label">{row.label}</span>
               <span set:html={row.value}></span>
             </div>
           ))}
