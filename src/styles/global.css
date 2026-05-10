@@ -115,9 +115,9 @@ strong {
 }
 
 .site-title {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   text-decoration: none;
 }
 
@@ -523,7 +523,7 @@ section {
 .card h3 {
   margin: 0 0 10px;
   font-size: 1.15rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .card p {
@@ -639,7 +639,7 @@ pre {
 .two-col {
   display: grid;
   gap: 18px;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .tableish {
@@ -765,7 +765,7 @@ pre {
   width: 80px;
   height: 80px;
   object-fit: cover;
-  object-position: left top;
+  object-position: center;
   display: block;
   border-radius: 50%;
   margin-bottom: 10px;
@@ -774,7 +774,7 @@ pre {
 
 .project-card-top h2 {
   margin: 0;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .project-card-link {
