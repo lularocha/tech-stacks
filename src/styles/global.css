@@ -5,7 +5,7 @@
   --text: #1f1f1f;
   --muted: #777;
   --accent: #ff7700;
-  --accent-soft: #ffe6cc;
+  --accent-soft: #f9ebdd;
   --accent-deep: #c95f00;
   --code-bg: #222222;
   --code-text: #f3efe9;
@@ -371,7 +371,7 @@ strong {
 }
 
 .hero-image {
-  width: 260px;
+  width: 390px;
   height: 260px;
   object-fit: cover;
   object-position: left top;
@@ -573,7 +573,7 @@ section {
   height: 34px;
   display: grid;
   place-items: center;
-  border-radius: var(--radius);
+  border-radius: 50%;
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 800;
@@ -840,8 +840,10 @@ pre {
   }
 
   .hero-image {
-    width: 260px;
-    height: 260px;
+    width: 100%;
+    max-width: 390px;
+    height: auto;
+    aspect-ratio: 390 / 260;
   }
 }
 
