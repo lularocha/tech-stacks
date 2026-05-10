@@ -68,9 +68,9 @@ export const projects: ProjectEntry[] = [
     title: "Dots Animation Tool",
     summary: {
       en:
-        "A Vite + React + TypeScript tool for live visual animation studies and SVG export. It includes local export middleware, scene generation logic, and a browser UI for exploring and saving animation variations.",
+        "A Vite + React + TypeScript tool for live visual animation studies and SVG export, featuring a parameter-driven animation system for exploring and saving generative motion variations.",
       pt:
-        "Uma ferramenta em Vite + React + TypeScript para estudos visuais de animação em tempo real e exportação de SVG. Ela inclui middleware local de exportação, lógica de geração de cena e uma interface no navegador para explorar e salvar variações de animação.",
+        "Uma ferramenta em Vite + React + TypeScript para estudos visuais de animação em tempo real e exportação de SVG, com um sistema de animação orientado por parâmetros para explorar e salvar variações generativas de movimento.",
     },
     liveUrl: "https://movingdots.vercel.app/",
     imageSrc: "/project-images/dot-animation.png",
@@ -153,7 +153,7 @@ export const ui = {
     closeProjectsMenu: "Close projects menu",
     techStackReview: "Tech Stack Review",
     liveAt: "Live at:",
-    atAGlance: "At a glance",
+    atAGlance: "Overview",
     openLiveSite: "Open live site",
     footerPrefix: "by lula rocha",
   },

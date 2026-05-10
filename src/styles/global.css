@@ -140,7 +140,7 @@ strong {
   gap: 10px;
   margin-top: 18px;
   padding-top: 18px;
-  border-top: 1px solid #eee;
+  border-top: 4px solid #ddd;
 }
 
 .locale-link {
@@ -710,7 +710,7 @@ pre {
   grid-template-columns: 160px 1fr;
   gap: 12px;
   align-items: center;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #e5e5e5;
   padding: 10px 0;
 }
 
