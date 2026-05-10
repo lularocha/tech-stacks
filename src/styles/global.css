@@ -383,7 +383,7 @@ strong {
   border: 0;
   border-radius: var(--radius);
   background: #fff;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 24px rgb(0 0 0 / 10%);
   outline: none;
 }
 
