@@ -80,7 +80,7 @@ npm run dev
 
 npm run build
 npm start</pre><p>Além do Node e do npm, o app depende dos arquivos locais de statements e das variáveis de autenticação / persistência esperadas pelo ambiente.</p></article>
-        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o projeto precisa</h3><ul><li>Node.js e npm.</li><li>Arquivos de extrato disponíveis localmente.</li><li>Configuração de senha e, opcionalmente, sessão/persistência.</li><li>Redis opcional em ambientes hospedados.</li></ul></article>
+        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o projeto precisa</h3><ul><li>Node.js e npm.</li><li>Arquivos de extrato disponíveis localmente.</li><li><code>DASHBOARD_PASSWORD_[NOMEDOPERFIL]</code> para perfis protegidos.</li><li><code>UPSTASH_REDIS_REST_URL</code> e <code>UPSTASH_REDIS_REST_TOKEN</code> apenas se a persistência com Redis for desejada.</li></ul></article>
       </div>
     </section>
 
