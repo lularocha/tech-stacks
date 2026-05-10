@@ -6,12 +6,24 @@ export interface ProjectEntry {
   slug: string;
   title: string;
   summary: Record<Locale, string>;
-  liveUrl: string;
+  liveUrl?: string;
   imageSrc: string;
   locales: Locale[];
 }
 
 export const projects: ProjectEntry[] = [
+  {
+    slug: "tech-stacks-stack",
+    title: "Tech Stacks",
+    summary: {
+      en:
+        "A bilingual static site built with Astro that serves a double function: it documents the projects and explains their tech stacks through shared layouts, reusable data, and localized routes. It also represents a foundational step in the process of learning how to build with AI.",
+      pt:
+        "Um site estático bilíngue construído com Astro que cumpre uma dupla função: documentar os projetos e explicar suas stacks por meio de layouts compartilhados, dados reutilizáveis e rotas localizadas. Ele também representa um passo fundamental no processo de aprendizado de como construir com IA.",
+    },
+    imageSrc: "/project-images/tech-stacks.png",
+    locales: ["en", "pt"],
+  },
   {
     slug: "mybtc-calculator-stack",
     title: "BTC Calculator",
@@ -116,6 +128,11 @@ export const projects: ProjectEntry[] = [
     imageSrc: "/project-images/qr-code-generator.png",
     locales: ["en", "pt"],
   },
+];
+
+export const orderedProjects = [
+  ...projects.filter((project) => project.slug !== "tech-stacks-stack"),
+  ...projects.filter((project) => project.slug === "tech-stacks-stack"),
 ];
 
 export const placeholderProjects = [8, 9, 10, 11, 12].map((index) => ({

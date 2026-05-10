@@ -3,7 +3,7 @@ import {
   getAlternatePath,
   getHomePath,
   getProjectPath,
-  projects,
+  orderedProjects,
   siteTitle,
   ui,
   type Locale,
@@ -46,7 +46,7 @@ const copy = ui[locale];
           >
             {copy.home}
           </a>
-          {projects.map((project) => (
+          {orderedProjects.map((project) => (
             <a
               class:list={[
                 "menu-link",

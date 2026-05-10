@@ -1,14 +1,14 @@
 ---
 import ProjectCard from "../../components/ProjectCard.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { projects } from "../../data/projects";
+import { orderedProjects } from "../../data/projects";
 ---
 
 <BaseLayout title="AI Projects / Tech Stacks" locale="pt">
   <main>
     <section>
       <div class="project-grid">
-        {projects.map((project) => (
+        {orderedProjects.map((project) => (
           <ProjectCard
             title={project.title}
             summary={project.summary.pt}

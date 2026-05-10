@@ -1,0 +1,259 @@
+---
+import ProjectHero from "../../components/ProjectHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../data/projects";
+
+const project = projects.find((entry) => entry.slug === "tech-stacks-stack")!;
+const stackRows = [
+  { label: "Framework", value: "Astro 5" },
+  { label: "Saída", value: "Build de site estático" },
+  { label: "Linguagem", value: "Astro com suporte a TypeScript + JavaScript" },
+  { label: "Modelo de conteúdo", value: "Metadados compartilhados em <code>src/data/projects.ts</code>" },
+  { label: "Estilo", value: "CSS global em <code>src/styles/global.css</code>" },
+  { label: "Localização", value: "Rotas em inglês + português" },
+  { label: "Assets", value: "Imagens de projetos e script de navegador em <code>public/</code>" },
+  { label: "Deploy", value: "Deploy estático via Vercel" },
+];
+---
+
+<BaseLayout title="Tech Stacks Tech Stack" currentSlug={project.slug} locale="pt">
+  <ProjectHero
+    title={project.title}
+    lead={project.summary.pt}
+    stackRows={stackRows}
+    imageSrc={project.imageSrc}
+    locale="pt"
+  />
+
+  <main>
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Stack principal</h2>
+          <p>As peças centrais que sustentam este site de documentação.</p>
+        </div>
+      </div>
+      <div class="grid cols-3">
+        <article class="card">
+          <div class="accent blue">Framework</div>
+          <h3>Astro 5</h3>
+          <p>
+            Astro é o framework do site. Ele cuida de rotas, composição de
+            páginas, geração estática e do modelo de layout compartilhado usado
+            por todas as páginas de análise.
+          </p>
+        </article>
+        <article class="card">
+          <div class="accent teal">Modelo de renderização</div>
+          <h3>Saída estática</h3>
+          <p>
+            O site gera arquivos HTML estáticos em vez de depender de um runtime
+            de servidor. Isso simplifica o deploy e mantém o projeto rápido e
+            leve.
+          </p>
+        </article>
+        <article class="card">
+          <div class="accent violet">Estrutura de conteúdo</div>
+          <h3>Metadados compartilhados em um único arquivo</h3>
+          <p>
+            Títulos, resumos, suporte de idioma, caminhos e textos de UI ficam
+            juntos em <span class="path">src/data/projects.ts</span>. A home e as
+            páginas internas leem dessa mesma fonte de verdade.
+          </p>
+        </article>
+        <article class="card">
+          <div class="accent amber">Estilo</div>
+          <h3>CSS global</h3>
+          <p>
+            O sistema visual está concentrado principalmente em
+            <span class="path">src/styles/global.css</span>. Tokens de layout,
+            estilos de card, hero e responsividade vivem ali.
+          </p>
+        </article>
+        <article class="card">
+          <div class="accent blue">Localização</div>
+          <h3>Rotas em inglês e português</h3>
+          <p>
+            O projeto publica páginas localizadas nos dois idiomas. Inglês é o
+            padrão; português usa rotas dedicadas em
+            <span class="path">src/pages/pt/</span> e uma home localizada.
+          </p>
+        </article>
+        <article class="card">
+          <div class="accent teal">Forma de deploy</div>
+          <h3>Deploy estático na Vercel</h3>
+          <p>
+            Este repositório está configurado como um site estático em Astro que
+            pode ser publicado na Vercel sem lógica própria de backend. A
+            complexidade fica no build, não em servidores de produção.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Como roda</h2>
+          <p>Do código-fonte às páginas estáticas finais.</p>
+        </div>
+      </div>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="num">1</div>
+          <div>
+            <h3>Astro lê as entradas de página</h3>
+            <p>
+              Cada análise de projeto é uma página Astro dentro de
+              <span class="path">src/pages/</span>, com equivalentes em português
+              em <span class="path">src/pages/pt/</span>.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="num">2</div>
+          <div>
+            <h3>Dados compartilhados alimentam navegação e cards</h3>
+            <p>
+              A lista de projetos em <span class="path">src/data/projects.ts</span>
+              abastece os cards da home, o menu de projetos, a troca de idioma e
+              o conteúdo do hero.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="num">3</div>
+          <div>
+            <h3>Componentes reutilizáveis montam cada página</h3>
+            <p>
+              <span class="path">BaseLayout.astro</span>,
+              <span class="path">ProjectHero.astro</span> e os componentes de
+              header/footer mantêm a estrutura consistente em todas as rotas.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="num">4</div>
+          <div>
+            <h3>O CSS global aplica o sistema visual compartilhado</h3>
+            <p>
+              Um único stylesheet global controla tipografia, espaçamento, cards,
+              hero, etapas em fluxo e comportamento responsivo.
+            </p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="num">5</div>
+          <div>
+            <h3>Astro gera a saída com rotas em arquivo</h3>
+            <p>
+              <code>npm run build</code> gera as páginas estáticas finais com
+              formato de rota baseado em arquivo, incluindo
+              <span class="path">pt.html</span> para a home em português.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Mapa da arquitetura</h2>
+          <p>O repositório é pequeno, mas a divisão de responsabilidades é clara.</p>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="card callout">
+          <div class="accent blue">Pastas principais</div>
+          <div class="tableish">
+            <div class="row">
+              <strong>src/pages/</strong>
+              <span>Arquivos de rota em inglês para a home e as páginas de análise.</span>
+            </div>
+            <div class="row">
+              <strong>src/pages/pt/</strong>
+              <span>Arquivos de rota em português espelhando as páginas localizadas.</span>
+            </div>
+            <div class="row">
+              <strong>src/components/</strong>
+              <span>Blocos de UI compartilhados como header, footer, cards e hero.</span>
+            </div>
+            <div class="row">
+              <strong>src/data/</strong>
+              <span>Metadados compartilhados, helpers de locale e textos bilíngues de UI.</span>
+            </div>
+            <div class="row">
+              <strong>public/</strong>
+              <span>Assets estáticos como screenshots, favicon e o script do menu.</span>
+            </div>
+          </div>
+        </div>
+        <div class="code-card">
+          <h3>Arquivos importantes</h3>
+          <pre>package.json
+astro.config.mjs
+src/data/projects.ts
+src/layouts/BaseLayout.astro
+src/components/
+src/pages/
+src/styles/global.css</pre>
+          <p>
+            O projeto é propositalmente direto: páginas de conteúdo, metadados
+            compartilhados, componentes reutilizáveis e uma etapa de build
+            estático.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Comandos para rodar</h2>
+          <p>O fluxo local segue o ciclo padrão de um site estático em Astro.</p>
+        </div>
+      </div>
+      <div class="grid cols-2">
+        <article class="code-card">
+          <h3>Scripts</h3>
+          <pre>npm install
+npm run dev
+
+npm run build
+npm run preview</pre>
+          <p>
+            O workflow documentado não exige banco de dados, workers em segundo
+            plano nem processos de servidor customizados.
+          </p>
+        </article>
+        <article class="card mini-list">
+          <div class="accent teal">O que precisa</div>
+          <h3>Ambiente esperado</h3>
+          <ul>
+            <li>Node.js e npm.</li>
+            <li>Dependências do Astro vindas de <code>package.json</code>.</li>
+            <li>Assets estáticos disponíveis em <code>public/</code>.</li>
+            <li>Sem banco de dados em runtime ou segredos de servidor para o site base.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <h2>Resumo final</h2>
+        </div>
+      </div>
+      <div class="card callout">
+        <p>
+          Tech Stacks é um <strong>site estático bilíngue em Astro</strong>
+          construído para documentar outros projetos com
+          <strong>metadados compartilhados, componentes reutilizáveis, rotas
+          localizadas e um modelo simples de deploy baseado em arquivos</strong>.
+        </p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
