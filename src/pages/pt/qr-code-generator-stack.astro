@@ -7,9 +7,9 @@ const project = projects.find((entry) => entry.slug === "qr-code-generator-stack
 const stackRows = [
   { label: "Tipo", value: "Página utilitária estática" },
   { label: "Linguagem", value: "HTML + CSS + JavaScript" },
-  { label: "Estilo", value: "CSS inline" },
-  { label: "Biblioteca", value: "qrcodejs via CDN" },
-  { label: "Saída", value: "Geração client-side de QR Code" },
+  { label: "Estilo", value: "Folha de estilos dedicada" },
+  { label: "Biblioteca", value: "Arquivo qrcode.js embutido" },
+  { label: "Saída", value: "Geração client-side + download em PNG" },
   { label: "Build", value: "Nenhum" },
   { label: "Runtime", value: "Somente navegador" },
   { label: "Backend", value: "Nenhum" },
@@ -22,38 +22,44 @@ const stackRows = [
   <main>
     <section><div class="section-head"><div><h2>Stack principal</h2><p>Este projeto é intencionalmente mínimo e nativo do navegador.</p></div></div>
       <div class="grid cols-3">
-        <article class="card"><div class="accent blue">Markup</div><h3>Documento HTML único</h3><p>A interface inteira vive em um único arquivo HTML, incluindo controles do formulário, conteúdo explicativo, regiões de layout e a área onde o QR Code gerado aparece.</p></article>
-        <article class="card"><div class="accent teal">Estilo</div><h3>CSS inline</h3><p>O projeto define o visual diretamente dentro do documento HTML, em vez de usar uma folha de estilo separada. Isso mantém a página autocontida, embora menos modular.</p></article>
-        <article class="card"><div class="accent violet">Biblioteca de geração</div><h3>qrcodejs via CDN</h3><p>Em vez de implementar o algoritmo de QR manualmente, a página carrega qrcodejs por uma CDN e usa a biblioteca no browser para produzir o resultado final.</p></article>
-        <article class="card"><div class="accent amber">Modelo de interação</div><h3>Controles no navegador</h3><p>Tamanho, nível de correção, cores e conteúdo são controlados diretamente no navegador. Trata-se de uma utility de frontend, não de um app com lógica de backend.</p></article>
-        <article class="card"><div class="accent blue">Modelo de runtime</div><h3>Sem framework ou build tool</h3><p>O projeto não possui manifesto de pacotes, bundler, framework ou camada de API. Tudo roda como uma página simples depois que o HTML e o script da CDN são carregados.</p></article>
-        <article class="card"><div class="accent teal">Comportamento de saída</div><h3>Gerado na própria página</h3><p>O QR Code é produzido diretamente no navegador, o que torna a página rápida, privada e barata de hospedar, já que não há geração de imagem no servidor.</p></article>
+        <article class="card"><div class="accent blue">Markup</div><h3>Entrada única em HTML</h3><p>O <code>index.html</code> define a estrutura da página, os alvos de texto bilíngue, os controles do formulário, a área de preview e o botão de download do QR gerado.</p></article>
+        <article class="card"><div class="accent teal">Estilo</div><h3>Stylesheet separado</h3><p>O visual da interface vive em <code>styles.css</code>, o que torna o projeto mais fácil de manter do que uma solução toda inline, sem deixar de ser um app totalmente estático.</p></article>
+        <article class="card"><div class="accent violet">Biblioteca de geração</div><h3>Biblioteca de QR local</h3><p>O projeto inclui um <code>qrcode.min.js</code> local em vez de depender de CDN, então a geração do QR continua funcionando sem acesso à internet depois que a página abre.</p></article>
+        <article class="card"><div class="accent amber">Modelo de interação</div><h3>Controles e traduções no navegador</h3><p>O usuário escolhe texto, tamanho, correção de erro, cor e idioma diretamente no browser. O JavaScript atualiza toda a interface e persiste o idioma escolhido no armazenamento local.</p></article>
+        <article class="card"><div class="accent blue">Modelo de runtime</div><h3>Sem framework ou build tool</h3><p>O projeto não possui manifesto de pacotes, bundler, framework ou camada de API. Tudo roda como arquivos estáticos com manipulação direta do DOM.</p></article>
+        <article class="card"><div class="accent teal">Comportamento de saída</div><h3>Gera e baixa no client-side</h3><p>O QR Code aparece na página e pode ser baixado como PNG diretamente do navegador, sem geração de imagem no servidor nem etapa de upload.</p></article>
       </div>
     </section>
 
-    <section><div class="section-head"><div><h2>Como roda</h2><p>O app é montado a partir de uma página e um script de terceiros.</p></div></div>
+    <section><div class="section-head"><div><h2>Como roda</h2><p>O app é montado a partir de um HTML, uma folha de estilos, um script da aplicação e uma biblioteca de QR embutida.</p></div></div>
       <div class="flow">
-        <div class="flow-step"><div class="num">1</div><div><h3>O navegador carrega a página HTML</h3><p><span class="path">index.html</span> contém a estrutura da interface, os estilos inline e as referências de script.</p></div></div>
-        <div class="flow-step"><div class="num">2</div><div><h3>A biblioteca é carregada por CDN</h3><p>A página importa qrcodejs de uma CDN pública, em vez de empacotar a dependência localmente.</p></div></div>
-        <div class="flow-step"><div class="num">3</div><div><h3>O input do usuário configura o QR</h3><p>Os controles permitem definir conteúdo, tamanho, correção de erro e aparência do código.</p></div></div>
-        <div class="flow-step"><div class="num">4</div><div><h3>O navegador gera a saída</h3><p>O JavaScript cria o QR Code no client-side e o renderiza na área de output sem precisar chamar um servidor.</p></div></div>
-        <div class="flow-step"><div class="num">5</div><div><h3>O usuário trabalha só no frontend</h3><p>Como o app é totalmente client-side, ele se comporta mais como uma utility autocontida do que como uma aplicação web convencional.</p></div></div>
+        <div class="flow-step"><div class="num">1</div><div><h3>O navegador carrega a base estática</h3><p><span class="path">index.html</span> conecta formulário, preview, ganchos de tradução e referências para scripts e estilos.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>O script inicializa o estado de idioma</h3><p><span class="path">script.js</span> lê o idioma salvo no armazenamento local, aplica as traduções e ajusta o texto do seletor de cor para desktop ou mobile.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>O input do usuário configura o QR</h3><p>Os controles coletam texto, tamanho, cor e correção de erro antes de gerar o código na própria página.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>A biblioteca local renderiza o resultado</h3><p><span class="path">qrcode.min.js</span> expõe o gerador usado pelo script principal para desenhar o QR na área de preview.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>O navegador exporta o PNG</h3><p>O botão de download lê o canvas ou a imagem renderizada e salva o QR Code localmente, sem qualquer chamada para backend.</p></div></div>
       </div>
     </section>
 
-    <section><div class="section-head"><div><h2>Mapa da arquitetura</h2><p>Esta é uma das arquiteturas mais simples de todo o workspace.</p></div></div>
+    <section><div class="section-head"><div><h2>Mapa da arquitetura</h2><p>Ela continua entre as arquiteturas mais simples do workspace, mas agora está separada em assets estáticos claros.</p></div></div>
       <div class="two-col">
         <div class="card callout"><div class="accent blue">Arquivos principais</div><div class="tableish">
-          <div class="row"><strong>index.html</strong><span>Toda a interface, estilos inline e lógica de geração de QR Code no navegador.</span></div>
+          <div class="row"><strong>index.html</strong><span>Estrutura da página, controles do formulário, contêiner de preview, alvos de tradução e imports de script e estilo.</span></div>
+          <div class="row"><strong>styles.css</strong><span>Todo o visual de layout, cards, controles, comportamento responsivo e apresentação da utility bilíngue.</span></div>
+          <div class="row"><strong>script.js</strong><span>Traduções, persistência de idioma, geração do QR, comportamento de download e eventos da interface.</span></div>
+          <div class="row"><strong>qrcode.min.js</strong><span>Biblioteca de terceiros embutida que executa a renderização real do QR Code no navegador.</span></div>
         </div></div>
-        <div class="code-card"><h3>Arquivos importantes</h3><pre>index.html</pre><p>O projeto é propositalmente compacto. Ele troca modularidade por portabilidade e simplicidade.</p></div>
+        <div class="code-card"><h3>Arquivos importantes</h3><pre>index.html
+styles.css
+script.js
+qrcode.min.js</pre><p>O projeto continua propositalmente compacto, mas agora separa estrutura, estilo, lógica da aplicação e dependência de QR em arquivos estáticos previsíveis.</p></div>
       </div>
     </section>
 
     <section><div class="section-head"><div><h2>Dados e runtime</h2><p>A página funciona inteiramente no navegador, sem estado persistente nem integração de backend.</p></div></div>
       <div class="grid cols-2">
-        <article class="card mini-list"><div class="accent teal">Guiado por input</div><h3>Os controles do usuário definem o resultado</h3><ul><li>Texto ou URL de entrada viram o conteúdo codificado.</li><li>Tamanho da exibição e correção de erro são escolhidos na própria página.</li><li>Cores e apresentação são ajustadas no navegador.</li><li>Nenhum dado precisa ser salvo ou enviado a um backend.</li></ul></article>
-        <article class="card mini-list"><div class="accent amber">Modelo de dependência</div><h3>Uma biblioteca de CDN faz o trabalho pesado</h3><ul><li>A geração do QR Code depende de qrcodejs.</li><li>O projeto não empacota dependências localmente.</li><li>A página é fácil de hospedar, mas depende da disponibilidade do script da CDN.</li><li>É uma utility leve, não uma aplicação de stack ampla.</li></ul></article>
+        <article class="card mini-list"><div class="accent teal">Guiado por input</div><h3>Os controles do usuário definem o resultado</h3><ul><li>Texto ou URL de entrada viram o conteúdo codificado.</li><li>Tamanho, cor e correção de erro são escolhidos na própria página.</li><li>O idioma selecionado é salvo localmente para a interface reabrir na mesma língua.</li><li>Nenhum conteúdo do QR é enviado para backend ou salvo remotamente.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Modelo de dependência</div><h3>Uma biblioteca local faz o trabalho pesado</h3><ul><li>A geração do QR Code depende do asset local <code>qrcode.min.js</code>.</li><li>O app continua leve e não precisa de npm nem bundler.</li><li>Como a biblioteca é local, a tool é mais portátil do que uma solução via CDN.</li><li>Isso continua sendo uma utility de navegador, não uma aplicação de stack ampla.</li></ul></article>
       </div>
     </section>
 
@@ -63,12 +69,12 @@ const stackRows = [
 
 # ou
 python -m http.server</pre><p>Você pode abrir o arquivo diretamente ou servir a pasta com um servidor estático mínimo se preferir URLs locais em vez de <code>file://</code>.</p></article>
-        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o projeto precisa</h3><ul><li>Nenhuma etapa de npm install.</li><li>Nenhuma variável de ambiente.</li><li>Nenhuma API key.</li><li>Acesso à internet para a biblioteca de QR carregada por CDN.</li></ul></article>
+        <article class="card mini-list"><div class="accent teal">Ambiente esperado</div><h3>O que o projeto precisa</h3><ul><li>Nenhuma etapa de npm install.</li><li>Nenhuma variável de ambiente.</li><li>Nenhuma API key.</li><li>Nenhum serviço de backend ou dependência externa de runtime.</li></ul></article>
       </div>
     </section>
 
     <section><div class="section-head"><div><h2>Resumo final</h2></div></div>
-      <div class="card callout"><p>QR Code Generator é uma <strong>utility estática muito leve</strong> construída com <strong>HTML puro, CSS inline e JavaScript de navegador</strong>, com <strong>qrcodejs carregado por CDN</strong> para fazer a geração do QR.</p></div>
+      <div class="card callout"><p>QR Code Generator é uma <strong>utility estática leve</strong> construída com <strong>HTML puro, stylesheet separado e JavaScript de navegador</strong>, usando uma <strong>biblioteca de QR embutida com lógica client-side de idioma e download</strong> para manter tudo privado e sem servidor.</p></div>
     </section>
   </main>
 </BaseLayout>

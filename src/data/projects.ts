@@ -120,11 +120,11 @@ export const projects: ProjectEntry[] = [
     title: "QR Code Generator",
     summary: {
       en:
-        "A simple static QR code tool built with plain HTML, inline CSS, and browser-side JavaScript. It uses a CDN-loaded QR code library to generate downloadable QR codes without a framework or build system.",
+        "A lightweight static QR code tool built with plain HTML, a dedicated stylesheet, and browser-side JavaScript. It uses a bundled QR library, bilingual UI copy, and client-side PNG export without any framework or build system.",
       pt:
-        "Uma ferramenta simples e estática de QR Code construída com HTML puro, CSS inline e JavaScript no navegador. Ela usa uma biblioteca de QR Code carregada por CDN para gerar códigos baixáveis sem framework nem etapa de build.",
+        "Uma ferramenta leve e estática de QR Code construída com HTML puro, stylesheet dedicado e JavaScript no navegador. Ela usa uma biblioteca de QR embutida, interface bilíngue e exportação de PNG no client-side sem framework nem etapa de build.",
     },
-    liveUrl: "https://sugiro.io/qrcode/",
+    liveUrl: "https://sugiro-qrcode.vercel.app/",
     imageSrc: "/project-images/qr-code-generator.png",
     locales: ["en", "pt"],
   },

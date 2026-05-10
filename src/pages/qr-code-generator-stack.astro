@@ -7,9 +7,9 @@ const project = projects.find((entry) => entry.slug === "qr-code-generator-stack
 const stackRows = [
   { label: "Type", value: "Static utility page" },
   { label: "Language", value: "HTML + CSS + JavaScript" },
-  { label: "Styling", value: "Inline CSS" },
-  { label: "Library", value: "qrcodejs via CDN" },
-  { label: "Output", value: "Client-side QR generation" },
+  { label: "Styling", value: "Dedicated stylesheet" },
+  { label: "Library", value: "Bundled qrcode.js file" },
+  { label: "Output", value: "Client-side QR generation + PNG download" },
   { label: "Build step", value: "None" },
   { label: "Runtime", value: "Browser only" },
   { label: "Backend", value: "None" },
@@ -22,38 +22,44 @@ const stackRows = [
   <main>
     <section><div class="section-head"><div><h2>Main Stack</h2><p>This project is intentionally minimal and browser-native.</p></div></div>
       <div class="grid cols-3">
-        <article class="card"><div class="accent blue">Markup</div><h3>Single HTML document</h3><p>The interface lives in one HTML file, including all the form controls, explanatory content, layout regions, and generated QR code output area.</p></article>
-        <article class="card"><div class="accent teal">Styling</div><h3>Inline CSS</h3><p>The project defines its styling directly inside the HTML document rather than a separate stylesheet. This keeps the page self-contained but makes styling less modular.</p></article>
-        <article class="card"><div class="accent violet">Generation library</div><h3>qrcodejs from CDN</h3><p>Instead of hand-building QR encoding logic, the page loads the qrcodejs library from a CDN and uses it in the browser to generate the final QR code output.</p></article>
-        <article class="card"><div class="accent amber">Interaction model</div><h3>Browser-side controls</h3><p>The size, correction level, colors, and content are all controlled in the browser. This is a front-end utility rather than an app with backend logic.</p></article>
-        <article class="card"><div class="accent blue">Runtime model</div><h3>No framework or build tool</h3><p>The project has no package manifest, bundler, framework, or API layer. Everything runs as a plain page after the HTML and CDN script are loaded.</p></article>
-        <article class="card"><div class="accent teal">Output behavior</div><h3>Generated in-page</h3><p>The QR code is produced directly in the browser, which keeps the page fast, private, and inexpensive to host because no server-side image generation is required.</p></article>
+        <article class="card"><div class="accent blue">Markup</div><h3>Single HTML entry point</h3><p><code>index.html</code> defines the shell, the bilingual copy targets, the form controls, the preview region, and the download button for the generated QR image.</p></article>
+        <article class="card"><div class="accent teal">Styling</div><h3>Separate stylesheet</h3><p>The UI styling lives in <code>styles.css</code>, which makes the project more maintainable than an all-inline setup while still keeping the app fully static.</p></article>
+        <article class="card"><div class="accent violet">Generation library</div><h3>Bundled QR library</h3><p>The project ships with a local <code>qrcode.min.js</code> file instead of depending on a CDN, so QR generation works without network access once the page is loaded.</p></article>
+        <article class="card"><div class="accent amber">Interaction model</div><h3>Browser-side controls and translations</h3><p>The user chooses text, size, correction level, color, and language in the browser. JavaScript updates the interface copy and persists the selected locale in local storage.</p></article>
+        <article class="card"><div class="accent blue">Runtime model</div><h3>No framework or build tool</h3><p>The project has no package manifest, bundler, framework, or API layer. Everything runs as static files in the browser with plain DOM scripting.</p></article>
+        <article class="card"><div class="accent teal">Output behavior</div><h3>Generated and downloaded client-side</h3><p>The QR code is rendered in-page and can be downloaded as a PNG directly from the browser, with no server-side image generation or upload step.</p></article>
       </div>
     </section>
 
-    <section><div class="section-head"><div><h2>How It Runs</h2><p>The app is assembled from one page plus one third-party script.</p></div></div>
+    <section><div class="section-head"><div><h2>How It Runs</h2><p>The app is assembled from one HTML file, one stylesheet, one app script, and one bundled QR library.</p></div></div>
       <div class="flow">
-        <div class="flow-step"><div class="num">1</div><div><h3>The browser loads the HTML page</h3><p><span class="path">index.html</span> contains the page structure, inline styles, and script references.</p></div></div>
-        <div class="flow-step"><div class="num">2</div><div><h3>The QR library loads from a CDN</h3><p>The page imports qrcodejs from a public CDN rather than bundling the library locally.</p></div></div>
-        <div class="flow-step"><div class="num">3</div><div><h3>User input configures the QR code</h3><p>The form controls let the user define content, size, error correction level, and appearance.</p></div></div>
-        <div class="flow-step"><div class="num">4</div><div><h3>The browser generates the QR output</h3><p>JavaScript creates the QR code client-side and renders it into the output area without needing a server request.</p></div></div>
-        <div class="flow-step"><div class="num">5</div><div><h3>The user can work entirely in the frontend</h3><p>Because the app is fully client-side, it behaves more like a self-contained utility page than a conventional web application.</p></div></div>
+        <div class="flow-step"><div class="num">1</div><div><h3>The browser loads the static shell</h3><p><span class="path">index.html</span> wires together the form, preview panel, localized text hooks, and script/style references.</p></div></div>
+        <div class="flow-step"><div class="num">2</div><div><h3>The app script initializes locale state</h3><p><span class="path">script.js</span> reads the saved language from local storage, applies the translation copy, and adjusts the color-label wording for desktop versus mobile.</p></div></div>
+        <div class="flow-step"><div class="num">3</div><div><h3>User input configures the QR code</h3><p>The form controls collect text, size, color, and error-correction settings before generating the code in the page.</p></div></div>
+        <div class="flow-step"><div class="num">4</div><div><h3>The bundled QR library renders the result</h3><p><span class="path">qrcode.min.js</span> exposes the QR generator used by the app script to render the output into the preview area.</p></div></div>
+        <div class="flow-step"><div class="num">5</div><div><h3>The browser exports the QR as PNG</h3><p>The download button reads the rendered canvas or image element and saves the QR code locally without any backend request.</p></div></div>
       </div>
     </section>
 
-    <section><div class="section-head"><div><h2>Architecture Map</h2><p>This is one of the simplest architectures in the workspace.</p></div></div>
+    <section><div class="section-head"><div><h2>Architecture Map</h2><p>This is still one of the simplest architectures in the workspace, but it is split into clear static assets.</p></div></div>
       <div class="two-col">
         <div class="card callout"><div class="accent blue">Key files</div><div class="tableish">
-          <div class="row"><strong>index.html</strong><span>Entire interface, inline styling, and browser-side QR generator logic.</span></div>
+          <div class="row"><strong>index.html</strong><span>Page structure, form controls, preview container, translation targets, and script/style imports.</span></div>
+          <div class="row"><strong>styles.css</strong><span>All visual styling for layout, cards, controls, responsive behavior, and the bilingual utility page presentation.</span></div>
+          <div class="row"><strong>script.js</strong><span>Translations, locale persistence, QR generation flow, download behavior, and UI event handling.</span></div>
+          <div class="row"><strong>qrcode.min.js</strong><span>Bundled third-party library that performs the actual QR code rendering in the browser.</span></div>
         </div></div>
-        <div class="code-card"><h3>Important files</h3><pre>index.html</pre><p>The project is intentionally compact. It trades modularity for portability and simplicity.</p></div>
+        <div class="code-card"><h3>Important files</h3><pre>index.html
+styles.css
+script.js
+qrcode.min.js</pre><p>The project stays intentionally compact, but it now separates structure, styling, app logic, and the QR dependency into predictable static assets.</p></div>
       </div>
     </section>
 
     <section><div class="section-head"><div><h2>Data and Runtime</h2><p>The page works entirely in the browser with no persistent state or backend integration.</p></div></div>
       <div class="grid cols-2">
-        <article class="card mini-list"><div class="accent teal">Input-driven</div><h3>User controls define the output</h3><ul><li>Text or URL input becomes the encoded QR content.</li><li>Display size and error correction settings are chosen in-page.</li><li>Colors and presentation can be adjusted in the browser.</li><li>No data needs to be stored or submitted to a backend.</li></ul></article>
-        <article class="card mini-list"><div class="accent amber">Dependency model</div><h3>One CDN library does the heavy lifting</h3><ul><li>QR code generation relies on qrcodejs.</li><li>The project does not bundle dependencies locally.</li><li>The page is easy to host but depends on the CDN script being available.</li><li>This is a lightweight utility rather than a large application stack.</li></ul></article>
+        <article class="card mini-list"><div class="accent teal">Input-driven</div><h3>User controls define the output</h3><ul><li>Text or URL input becomes the encoded QR content.</li><li>Size, color, and error-correction settings are chosen in-page.</li><li>The selected language is stored locally so the UI can reopen in the same locale.</li><li>No QR content is submitted to a backend or stored remotely.</li></ul></article>
+        <article class="card mini-list"><div class="accent amber">Dependency model</div><h3>One local library does the heavy lifting</h3><ul><li>QR code generation relies on the bundled <code>qrcode.min.js</code> asset.</li><li>The app stays dependency-light and does not need npm or a bundler.</li><li>Because the library is local, the tool is more portable than a CDN-based setup.</li><li>This remains a lightweight browser utility rather than a larger application stack.</li></ul></article>
       </div>
     </section>
 
@@ -63,12 +69,12 @@ const stackRows = [
 
 # or
 python -m http.server</pre><p>You can open the file directly or serve it from a tiny local static server if you prefer local URLs instead of <code>file://</code>.</p></article>
-        <article class="card mini-list"><div class="accent teal">Environment setup</div><h3>What the project expects</h3><ul><li>No npm install step.</li><li>No environment variables.</li><li>No API keys.</li><li>Internet access is needed for the CDN-hosted QR library.</li></ul></article>
+        <article class="card mini-list"><div class="accent teal">Environment setup</div><h3>What the project expects</h3><ul><li>No npm install step.</li><li>No environment variables.</li><li>No API keys.</li><li>No backend services or external runtime dependencies.</li></ul></article>
       </div>
     </section>
 
     <section><div class="section-head"><div><h2>Bottom Line</h2></div></div>
-      <div class="card callout"><p>QR Code Generator is a <strong>very lightweight static utility</strong> built with <strong>plain HTML, inline CSS, and browser JavaScript</strong>, with <strong>qrcodejs loaded from a CDN</strong> to handle the QR generation itself.</p></div>
+      <div class="card callout"><p>QR Code Generator is a <strong>lightweight static utility</strong> built with <strong>plain HTML, a separate stylesheet, and browser JavaScript</strong>, using a <strong>bundled QR library plus client-side locale and download logic</strong> to keep everything private and server-free.</p></div>
     </section>
   </main>
 </BaseLayout>
