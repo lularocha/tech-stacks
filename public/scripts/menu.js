@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const storageKey = "preferred-language";
+  const menuTransitionMs = 520;
   const body = document.body;
   const locale = body?.dataset.locale;
   const pageKind = body?.dataset.pageKind;
@@ -27,10 +28,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const menus = document.querySelectorAll(".menu");
 
+  function finishMenuClose(menu) {
+    menu.classList.remove("is-open", "is-closing");
+    menu.removeAttribute("open");
+  }
+
+  function closeMenu(menu) {
+    if (!menu.hasAttribute("open")) {
+      return;
+    }
+
+    menu.classList.remove("is-open");
+    menu.classList.add("is-closing");
+
+    window.setTimeout(() => {
+      if (menu.classList.contains("is-open")) {
+        return;
+      }
+
+      finishMenuClose(menu);
+    }, menuTransitionMs);
+  }
+
+  function openMenu(menu) {
+    closeOtherMenus(menu);
+    menu.setAttribute("open", "");
+    menu.classList.remove("is-closing");
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        menu.classList.add("is-open");
+      });
+    });
+  }
+
   function closeOtherMenus(currentMenu) {
     menus.forEach((menu) => {
       if (menu !== currentMenu) {
-        menu.removeAttribute("open");
+        finishMenuClose(menu);
       }
     });
   }
@@ -44,14 +79,19 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    summary.addEventListener("click", () => {
-      if (!menu.hasAttribute("open")) {
-        closeOtherMenus(menu);
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      if (menu.classList.contains("is-open")) {
+        closeMenu(menu);
+        return;
       }
+
+      openMenu(menu);
     });
 
     overlay.addEventListener("click", () => {
-      menu.removeAttribute("open");
+      closeMenu(menu);
     });
 
     document.addEventListener("click", (event) => {
@@ -63,12 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      menu.removeAttribute("open");
+      closeMenu(menu);
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        menu.removeAttribute("open");
+        closeMenu(menu);
       }
     });
   });
