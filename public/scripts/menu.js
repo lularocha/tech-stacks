@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const locale = body?.dataset.locale;
   const pageKind = body?.dataset.pageKind;
   const preferredLocale = window.localStorage.getItem(storageKey);
+  const backToTopButton = document.querySelector(".back-to-top");
 
   if (preferredLocale && pageKind === "home" && locale && preferredLocale !== locale) {
     const target = preferredLocale === "pt" ? "/pt.html" : "/";
@@ -71,4 +72,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  if (backToTopButton) {
+    const toggleBackToTop = () => {
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const threshold = scrollableHeight * 0.25;
+      const shouldShow = scrollableHeight > 0 && window.scrollY >= threshold;
+
+      backToTopButton.classList.toggle("is-visible", shouldShow);
+    };
+
+    backToTopButton.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    window.addEventListener("scroll", toggleBackToTop, { passive: true });
+    toggleBackToTop();
+  }
 });
