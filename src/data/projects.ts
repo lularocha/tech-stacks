@@ -155,7 +155,7 @@ export const ui = {
     liveAt: "Live at:",
     atAGlance: "At a glance",
     openLiveSite: "Open live site",
-    footerPrefix: "Developed by Lula Rocha",
+    footerPrefix: "by lula rocha",
   },
   pt: {
     locale: "pt" as const,
@@ -166,7 +166,7 @@ export const ui = {
     liveAt: "Ao vivo em:",
     atAGlance: "Visão geral",
     openLiveSite: "Abrir site ao vivo",
-    footerPrefix: "Desenvolvido por Lula Rocha",
+    footerPrefix: "por lula rocha",
   },
 };
 
