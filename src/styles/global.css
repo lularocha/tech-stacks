@@ -303,7 +303,7 @@ strong {
   display: block;
   padding: 12px 0;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
 
 .menu-link:hover,
