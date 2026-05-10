@@ -3,7 +3,7 @@
   --panel: #ffffff;
   --panel-strong: #ffffff;
   --text: #1f1f1f;
-  --muted: #777;
+  --muted: #666;
   --accent: #ff7700;
   --accent-soft: #f9ebdd;
   --accent-deep: #c95f00;
@@ -768,7 +768,7 @@ pre {
   object-position: left top;
   display: block;
   border-radius: 50%;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
