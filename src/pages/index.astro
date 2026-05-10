@@ -4,9 +4,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { orderedProjects } from "../data/projects";
 ---
 
-<BaseLayout title="AI Projects / Tech Stacks" locale="en">
+<BaseLayout title="Tech Stacks" locale="en">
   <main>
-    <section>
+    <section class="home-section">
+      <h2 class="home-lead">The technologies behind the projects.</h2>
       <div class="project-grid">
         {orderedProjects.map((project) => (
           <ProjectCard

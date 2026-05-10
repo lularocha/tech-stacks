@@ -1,4 +1,4 @@
-export const siteTitle = "AI Projects / Tech Stacks";
+export const siteTitle = "Tech Stacks";
 
 export type Locale = "en" | "pt";
 

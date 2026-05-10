@@ -115,9 +115,9 @@ strong {
 }
 
 .site-title {
-  font-size: 1.35rem;
+  font-size: 2rem;
   font-weight: 600;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.05em;
   text-decoration: none;
 }
 
@@ -137,26 +137,45 @@ strong {
 .menu-locale-switcher {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   margin-top: 18px;
   padding-top: 18px;
-  border-top: 4px solid #ddd;
+  border-top: 2px solid #ddd;
 }
 
 .locale-link {
-  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background: #eee;
+  color: #000;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
   line-height: 1;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 .locale-link.active {
-  color: var(--text);
-  font-weight: 600;
+  background: #000;
+  color: #fff;
 }
 
 .locale-link:hover {
-  color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.locale-link.active:hover {
+  background: #000;
+  color: #fff;
 }
 
 .nav-link,
@@ -491,6 +510,10 @@ section {
   margin-top: 28px;
 }
 
+.home-section {
+  margin-top: 0;
+}
+
 .section-head {
   display: flex;
   align-items: end;
@@ -740,15 +763,11 @@ pre {
   font-size: 1.05rem;
 }
 
-.home-intro {
-  padding: 56px 0 24px;
-}
-
 .home-lead {
-  max-width: 72ch;
-  color: var(--muted);
-  line-height: 1.7;
-  margin: 16px 0 0;
+  color: #000;
+  line-height: 1.25;
+  font-weight: 300;
+  margin: 20px 0 24px;
 }
 
 .project-grid {
