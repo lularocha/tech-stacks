@@ -17,9 +17,9 @@ export const projects: ProjectEntry[] = [
     title: "Tech Stacks",
     summary: {
       en:
-        "A bilingual static site built with Astro that serves a double function: it documents the projects and explains their tech stacks through shared layouts, reusable data, and localized routes. It also represents a foundational step in the process of learning how to build with AI.",
+        "(This website) A bilingual static site built with Astro that serves a double function: it documents the projects and explains their tech stacks through shared layouts, reusable data, and localized routes. It also represents a foundational step in the process of learning how to build with AI.",
       pt:
-        "Um site estático bilíngue construído com Astro que cumpre uma dupla função: documentar os projetos e explicar suas stacks por meio de layouts compartilhados, dados reutilizáveis e rotas localizadas. Ele também representa um passo fundamental no processo de aprendizado de como construir com IA.",
+        "(Este site) Um site estático bilíngue construído com Astro que cumpre uma dupla função: documentar os projetos e explicar suas stacks por meio de layouts compartilhados, dados reutilizáveis e rotas localizadas. Ele também representa um passo fundamental no processo de aprendizado de como construir com IA.",
     },
     imageSrc: "/project-images/tech-stacks.png",
     locales: ["en", "pt"],
